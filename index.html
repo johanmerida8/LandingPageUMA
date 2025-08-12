@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      UMA - Unidad de Microelectrónica y Arquitecturas | Universidad del Valle
+    </title>
+    <meta
+      name="description"
+      content="Unidad de Microelectrónica y Arquitecturas de la Universidad del Valle - Investigación, desarrollo e innovación en IoT, IA, Blockchain y más."
+    />
+
+    <!-- External Libraries -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body data-theme="light">
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav-container">
+        <!-- Logo Section -->
+        <div class="nav-left">
+          <img
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo_uma-S2843pPd763lL74CEqxHmUSy4IibEP.png"
+            alt="UMA Logo"
+            class="logo"
+          />
+        </div>
+        
+        <!-- Navigation Menu (Centered) -->
+        <ul class="nav-menu">
+          <li><a href="#inicio" data-i18n="nav_inicio">Inicio</a></li>
+          <li><a href="#nosotros" data-i18n="nav_nosotros">Nosotros</a></li>
+          <li><a href="#servicios" data-i18n="nav_servicios">Servicios</a></li>
+          <li><a href="#proyectos" data-i18n="nav_proyectos">Proyectos</a></li>
+          <li><a href="#publicaciones" data-i18n="nav_publicaciones">Publicaciones</a></li>
+          <li><a href="#contacto" data-i18n="nav_contacto">Contacto</a></li>
+        </ul>
+        
+        <!-- Right Section (Theme Toggle, Language) -->
+        <div class="nav-right">
+          <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon" id="theme-icon"></i>
+          </button>
+          
+          <!-- Language switch (custom dropdown) -->
+          <div class="lang-switch">
+            <button
+              class="lang-trigger"
+              id="langTrigger"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+            >
+              <span id="langCurrent">ES Español</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M7 10l5 5 5-5z" />
+              </svg>
+            </button>
+
+            <ul class="lang-menu" id="langMenu" role="listbox">
+              <li
+                class="lang-option"
+                data-value="es"
+                role="option"
+                aria-selected="true"
+              >
+                ES Español
+              </li>
+              <li class="lang-option" data-value="en" role="option">
+                EN English
+              </li>
+              <li class="lang-option" data-value="pt" role="option">
+                PT Português
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+      <!-- 3D Animation Background -->
+      <div class="hero-background">
+        <!-- <iframe src='https://my.spline.design/retrofuturisticcircuitloop-CF4zDUVltoqILNvWMKCpCkfu/' frameborder='0' width='100%' height='100%'></iframe> -->
+        <iframe src='https://my.spline.design/galaxy-WT8ugdhSf4ABaqOfpjyXT8Di/' frameborder='0' width='100%' height='100%'></iframe>
+      </div>
+      
+      <div class="hero-container">
+        <div class="hero-content-centered">
+          <h1>
+            <span data-i18n="hero_title_a">Llevamos el desarrollo</span> <span class="highlight" data-i18n="hero_highlight">tecnológico</span><span data-i18n="hero_title_b"> a un nuevo nivel</span>
+          </h1>
+          <p data-i18n="hero_paragraph">
+            Investigación e innovación en ingeniería biomédica, electrónica y
+            sistemas informáticos para resolver los desafíos del mañana.
+          </p>
+          
+          <!-- Stats integrated into hero -->
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number">15+</div>
+              <div class="stat-label" data-i18n="stat_anios">Años de experiencia</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">50+</div>
+              <div class="stat-label" data-i18n="stat_proyectos">Proyectos completados</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">+20</div>
+              <div class="stat-label" data-i18n="stat_investigadores">Investigadores</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">12+</div>
+              <div class="stat-label" data-i18n="stat_premios">Premios recibidos</div>
+            </div>
+          </div>
+          
+          <div class="hero-buttons">
+            <a href="#nosotros" class="btn-primary">
+              <i class="fas fa-rocket"></i>
+              <span data-i18n="btn_conocer_mas">Conocer más</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros" class="about">
+      <div class="about-container">
+        <div class="about-header">
+          <h2><span data-i18n="about_titulo_a">Sobre</span> <span class="highlight" data-i18n="about_titulo_b">Nosotros</span></h2>
+          <p data-i18n="about_sub">
+            Empresa para la implementación y soporte de proyectos tecnológicos
+            con el fin de realizar la transformación digital de nuestros
+            clientes
+          </p>
+        </div>
+
+        <div class="about-content">
+          <div class="about-text">
+            <p data-i18n="about_p1">
+              UMA es una compañía para el desarrollo y soporte de proyectos
+              tecnológicos con el fin de realizar la transformación digital de
+              nuestros clientes.
+            </p>
+            <p data-i18n="about_p2">
+              Realizamos la transformación digital para nuestros clientes a
+              través de hardware y software con el fin de tener empresas que
+              sean más eficientes y sostenibles.
+            </p>
+            <a href="#servicios" class="btn-primary">
+              <i class="fas fa-arrow-right"></i>
+              <span data-i18n="btn_ver_servicios">Ver servicios</span>
+            </a>
+          </div>
+          <div class="about-visual">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imagen%20%284%29-XefgEbmt4LE1AcNjkxXbPfgI6r0uLG.png"
+              alt="Sobre UMA"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="services">
+      <div class="services-container">
+        <div class="section-header">
+          <h2><span data-i18n="services_titulo_a">Nuestros</span> <span class="highlight" data-i18n="services_titulo_b">Servicios</span></h2>
+          <p data-i18n="services_sub">Soluciones personalizadas para diferentes segmentos del mercado</p>
+        </div>
+
+        <!-- Fixed horizontal expandable cards -->
+        <div class="services-wrapper">
+          <div class="services-container-cards">
+            <input
+              type="radio"
+              name="service-slide"
+              id="industria"
+              class="service-radio-input"
+              checked
+            />
+            <label for="industria" class="service-card">
+              <div class="service-row">
+                <div class="service-icon-circle">
+                  <i class="fas fa-industry"></i>
+                </div>
+                <div class="service-description">
+                  <h4 data-i18n="srv_industria_t">Industria 4.0</h4>
+                  <p data-i18n="srv_industria_d">
+                    Aplicaciones personalizadas con sensores, medición en tiempo
+                    real, control total de principio a fin con plataforma de
+                    gestión.
+                  </p>
+                  <ul class="service-features-horizontal">
+                    <li data-i18n="ftr_automatizacion">Automatización</li>
+                    <li data-i18n="ftr_iot">Sensores IoT</li>
+                    <li data-i18n="ftr_predictivo">Análisis predictivo</li>
+                    <li data-i18n="ftr_integracion">Integración</li>
+                  </ul>
+                </div>
+              </div>
+            </label>
+
+            <input
+              type="radio"
+              name="service-slide"
+              id="agroindustria"
+              class="service-radio-input"
+            />
+            <label for="agroindustria" class="service-card">
+              <div class="service-row">
+                <div class="service-icon-circle">
+                  <i class="fas fa-tractor"></i>
+                </div>
+                <div class="service-description">
+                  <h4 data-i18n="srv_agro_t">Agroindustria</h4>
+                  <p data-i18n="srv_agro_d">
+                    Agricultura de precisión: telemetría y gestión de cultivos.
+                    Monitoreo de lluvias, nivel de ríos y alertas de desastres
+                    naturales.
+                  </p>
+                  <ul class="service-features-horizontal">
+                    <li data-i18n="ftr_cultivos">Cultivos inteligentes</li>
+                    <li data-i18n="ftr_riego">Riego automatizado</li>
+                    <li data-i18n="ftr_alertas">Alertas climáticas</li>
+                    <li data-i18n="ftr_optimizacion">Optimización</li>
+                  </ul>
+                </div>
+              </div>
+            </label>
+
+            <input
+              type="radio"
+              name="service-slide"
+              id="medioambiente"
+              class="service-radio-input"
+            />
+            <label for="medioambiente" class="service-card">
+              <div class="service-row">
+                <div class="service-icon-circle">
+                  <i class="fas fa-leaf"></i>
+                </div>
+                <div class="service-description">
+                  <h4 data-i18n="srv_medio_t">Medio Ambiente</h4>
+                  <p data-i18n="srv_medio_d">
+                    Monitoreo de cuencas hidrográficas, emisiones de gases,
+                    calidad del aire, nivel de ruido. Estación meteorológica con
+                    sensores.
+                  </p>
+                  <ul class="service-features-horizontal">
+                    <li data-i18n="ftr_aire">Calidad del aire</li>
+                    <li data-i18n="ftr_hidrico">Monitoreo hídrico</li>
+                    <li data-i18n="ftr_meteo">Meteorología</li>
+                    <li data-i18n="ftr_ambiental">Análisis ambiental</li>
+                  </ul>
+                </div>
+              </div>
+            </label>
+
+            <input
+              type="radio"
+              name="service-slide"
+              id="blockchain"
+              class="service-radio-input"
+            />
+            <label for="blockchain" class="service-card">
+              <div class="service-row">
+                <div class="service-icon-circle">
+                  <i class="fas fa-link"></i>
+                </div>
+                <div class="service-description">
+                  <h4 data-i18n="srv_block_t">Blockchain</h4>
+                  <p data-i18n="srv_block_d">
+                    Implementación de tecnologías blockchain para trazabilidad,
+                    seguridad de datos y contratos inteligentes.
+                  </p>
+                  <ul class="service-features-horizontal">
+                    <li data-i18n="ftr_trazabilidad">Trazabilidad</li>
+                    <li data-i18n="ftr_contratos">Contratos inteligentes</li>
+                    <li data-i18n="ftr_seguridad">Seguridad</li>
+                    <li data-i18n="ftr_token">Tokenización</li>
+                  </ul>
+                </div>
+              </div>
+            </label>
+
+            <input
+              type="radio"
+              name="service-slide"
+              id="biomedicas"
+              class="service-radio-input"
+            />
+            <label for="biomedicas" class="service-card">
+              <div class="service-row">
+                <div class="service-icon-circle">
+                  <i class="fas fa-user-md"></i>
+                </div>
+                <div class="service-description">
+                  <h4 data-i18n="srv_biomed_t">Soluciones Biomédicas</h4>
+                  <p data-i18n="srv_biomed_d">
+                    Desarrollo de dispositivos médicos, sistemas de monitoreo de
+                    pacientes y análisis de datos biomédicos.
+                  </p>
+                  <ul class="service-features-horizontal">
+                    <li data-i18n="ftr_dispositivos">Dispositivos médicos</li>
+                    <li data-i18n="ftr_monitoreo">Monitoreo pacientes</li>
+                    <li data-i18n="ftr_telemed">Telemedicina</li>
+                    <li data-i18n="ftr_biomed">Análisis biomédico</li>
+                  </ul>
+                </div>
+              </div>
+            </label>
+
+            <input
+              type="radio"
+              name="service-slide"
+              id="inteligencia"
+              class="service-radio-input"
+            />
+            <label for="inteligencia" class="service-card">
+              <div class="service-row">
+                <div class="service-icon-circle">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <div class="service-description">
+                  <h4 data-i18n="srv_ia_t">Inteligencia Artificial</h4>
+                  <p data-i18n="srv_ia_d">
+                    Implementación de algoritmos de IA para análisis predictivo,
+                    procesamiento de datos y automatización inteligente.
+                  </p>
+                  <ul class="service-features-horizontal">
+                    <li data-i18n="ftr_ml">Machine Learning</li>
+                    <li data-i18n="ftr_pred">Análisis predictivo</li>
+                    <li data-i18n="ftr_nlp">Procesamiento NLP</li>
+                    <li data-i18n="ftr_vision">Visión artificial</li>
+                  </ul>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proyectos" class="projects">
+      <div class="projects-container">
+        <div class="section-header">
+          <h2><span data-i18n="projects_titulo_a">Nuestros</span> <span class="highlight" data-i18n="projects_titulo_b">Proyectos</span></h2>
+          <p data-i18n="projects_sub">
+            Descubre nuestros últimos proyectos de investigación y desarrollo tecnológico
+          </p>
+        </div>
+
+        <!-- Projects Video Content -->
+        <div class="video-slider-container">
+          <div class="video-slider">
+              <div class="video-slides">
+                <!-- Slide 1 -->
+                <div class="video-slide active">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/7WQLOJ6saJc?si=MzLSsiqL2Ydx_LZk&enablejsapi=1"
+                        title="Proyecto UMA - Video 1"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-1"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>Proyecto UMA - Desarrollo Tecnológico</h3>
+                      <p>
+                        Descubre nuestros avances en investigación y desarrollo
+                        de tecnologías innovadoras para transformar el futuro.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/-elBdsmXdHQ?si=6NKLOF6iVj9P29dV&enablejsapi=1"
+                        title="Proyecto UMA - Video 2"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-2"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>Innovación UMA - Soluciones Inteligentes</h3>
+                      <p>
+                        Conoce nuestras soluciones tecnológicas avanzadas que
+                        están revolucionando múltiples industrias.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/vnfqEQ__U9E?si=JRlNxMIDMFj_4ags&enablejsapi=1"
+                        title="Proyecto UMA - Video 3"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-3"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Investigación y Desarrollo</h3>
+                      <p>
+                        Explora nuestros proyectos de investigación que están
+                        definiendo el futuro de la tecnología.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/5hN3mDd581g?si=4oa4EENgUt0PZIsU&enablejsapi=1"
+                        title="Proyecto UMA - Video 4"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-4"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Tecnología IoT Avanzada</h3>
+                      <p>
+                        Descubre nuestras soluciones IoT que están revolucionando el monitoreo ambiental y industrial.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 5 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/GhA55iB0jKo?si=6Ee8h2nN7hS3Pson&enablejsapi=1"
+                        title="Proyecto UMA - Video 5"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-5"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Sistemas Inteligentes</h3>
+                      <p>
+                        Implementación de sistemas inteligentes para automatización y control industrial avanzado.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 6 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/RIG2nw199SI?si=7ONR3H7Db8HEnG1I&enablejsapi=1"
+                        title="Proyecto UMA - Video 6"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-6"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Monitoreo Ambiental</h3>
+                      <p>
+                        Soluciones avanzadas para el monitoreo ambiental y gestión sostenible de recursos.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 7 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/7xZpTUE3J0c?si=m06zgfVfddi3oq1Z&enablejsapi=1"
+                        title="Proyecto UMA - Video 7"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-7"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Innovación Biomédica</h3>
+                      <p>
+                        Desarrollo de tecnologías biomédicas innovadoras para mejorar la calidad de vida.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 8 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/PCEsnmbzPi8?si=6qHpFk5UvI6dnsPH&enablejsapi=1"
+                        title="Proyecto UMA - Video 8"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-8"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Redes de Sensores</h3>
+                      <p>
+                        Implementación de redes de sensores distribuidos para aplicaciones industriales y ambientales.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 9 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/CuRilVgkUi4?si=gY_XqhPhQHSntODs&enablejsapi=1"
+                        title="Proyecto UMA - Video 9"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-9"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Automatización Industrial</h3>
+                      <p>
+                        Soluciones de automatización para optimizar procesos industriales con tecnología de vanguardia.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 10 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/cy0nG0KC928?si=WCzltmUooK_p86Nn&enablejsapi=1"
+                        title="Proyecto UMA - Video 10"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-10"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Análisis de Datos</h3>
+                      <p>
+                        Análisis avanzado de datos para optimización de procesos y toma de decisiones inteligentes.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 11 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/fLY07hMttqA?si=2wg7fLn0geHJV5Sa&enablejsapi=1"
+                        title="Proyecto UMA - Video 11"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-11"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Energías Renovables</h3>
+                      <p>
+                        Investigación en energías renovables y sistemas de gestión energética sostenible.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 12 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/qkxLDeSoYME?si=To63GBWVcvqsa0eI&enablejsapi=1"
+                        title="Proyecto UMA - Video 12"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-12"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Blockchain Aplicado</h3>
+                      <p>
+                        Implementación de tecnología blockchain para trazabilidad y seguridad en cadenas de suministro.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 13 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/JknbgB-pdbI?si=Ma2f5B7IAK7_Ke5C&enablejsapi=1"
+                        title="Proyecto UMA - Video 13"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-13"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Inteligencia Artificial</h3>
+                      <p>
+                        Desarrollo de algoritmos de IA para procesamiento de datos y automatización inteligente.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 14 -->
+                <div class="video-slide">
+                  <div class="video-card">
+                    <div class="video-wrapper">
+                      <iframe
+                        src="https://www.youtube.com/embed/9Fg3vC3ero8?si=QdiC3ObX_WuuIR1U&enablejsapi=1"
+                        title="Proyecto UMA - Video 14"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        id="video-14"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="video-info">
+                      <h3>UMA - Futuro Tecnológico</h3>
+                      <p>
+                        Visión del futuro tecnológico y las innovaciones que están transformando el mundo.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Navigation Controls -->
+              <button class="slider-nav prev" onclick="changeSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="slider-nav next" onclick="changeSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+
+              <!-- Dot Indicators -->
+              <div class="slider-dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+                <span class="dot" onclick="currentSlide(7)"></span>
+                <span class="dot" onclick="currentSlide(8)"></span>
+                <span class="dot" onclick="currentSlide(9)"></span>
+                <span class="dot" onclick="currentSlide(10)"></span>
+                <span class="dot" onclick="currentSlide(11)"></span>
+                <span class="dot" onclick="currentSlide(12)"></span>
+                <span class="dot" onclick="currentSlide(13)"></span>
+                <span class="dot" onclick="currentSlide(14)"></span>
+              </div>
+              
+              <!-- Video Counter -->
+              <div class="video-counter">
+                <span id="current-video">1</span> de <span id="total-videos">14</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publicaciones" class="publications">
+      <div class="publications-container">
+        <div class="section-header">
+          <h2><span data-i18n="publications_titulo_a">Nuestras</span> <span class="highlight" data-i18n="publications_titulo_b">Publicaciones</span></h2>
+          <p data-i18n="publications_sub">
+            Conoce nuestras publicaciones científicas y artículos de investigación más destacados
+          </p>
+        </div>
+
+        <div class="publications-grid">
+            <div class="publication-card">
+              <div class="publication-header">
+                <h3 data-i18n="pub_ieee_titulo">IEEE Research Article</h3>
+                <span class="publication-type" data-i18n="pub_ieee_type">IEEE Xplore</span>
+              </div>
+              <div class="publication-meta">
+                <p>
+                  <strong data-i18n="pub_fuente">Fuente:</strong> <span data-i18n="pub_ieee_fuente">IEEE Xplore Digital Library</span>
+                </p>
+                <p><strong data-i18n="pub_año">Año:</strong> 2024</p>
+                <p><strong data-i18n="pub_doi">DOI:</strong> 10.1109/document.10876331</p>
+              </div>
+              <div class="publication-abstract">
+                <p data-i18n="pub_ieee_desc">
+                  Accede a este artículo científico de investigación disponible en la biblioteca digital IEEE Xplore.
+                </p>
+              </div>
+              <a href="https://ieeexplore.ieee.org/document/10876331/references#references" target="_blank" class="publication-link" data-i18n="pub_ver">Ver Publicación</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact">
+      <div class="contact-container">
+        <div class="contact-info">
+          <h2 data-i18n="contact_titulo_a">¿Listo para</h2> <h2><span class="highlight" data-i18n="contact_titulo_b">colaborar</span>?</h2>
+          <p data-i18n="contact_desc">
+            Contáctanos para discutir cómo podemos ayudarte a transformar tu
+            negocio con nuestras soluciones tecnológicas innovadoras.
+          </p>
+          <ul class="contact-details">
+            <li>
+              <i class="fas fa-envelope"></i>
+              uma@univalle.edu
+            </li>
+            <li>
+              <i class="fas fa-phone"></i>
+              +591 4 4200000
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt"></i>
+              <span data-i18n="contact_direccion">Campus Univalle, Av. Argentina #2083, Cochabamba, Bolivia</span>
+            </li>
+            <li>
+              <i class="fas fa-globe"></i>
+              uma.blokislabs.com
+            </li>
+          </ul>
+        </div>
+        <div class="contact-form">
+          <form>
+            <div class="form-group">
+              <label for="name" data-i18n="contact_nombre_label">Nombre completo</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Tu nombre"
+                data-i18n-placeholder="contact_nombre_placeholder"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email" data-i18n="contact_email_label">Correo electrónico</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="tu@email.com"
+                data-i18n-placeholder="contact_email_placeholder"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="company" data-i18n="contact_empresa_label">Empresa</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                placeholder="Tu empresa"
+                data-i18n-placeholder="contact_empresa_placeholder"
+              />
+            </div>
+            <div class="form-group">
+              <label for="message" data-i18n="contact_mensaje_label">Mensaje</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Cuéntanos sobre tu proyecto..."
+                data-i18n-placeholder="contact_mensaje_placeholder"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%" data-i18n="contact_enviar">
+              <i class="fas fa-paper-plane"></i>
+              Enviar mensaje
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo_uma-S2843pPd763lL74CEqxHmUSy4IibEP.png"
+            alt="UMA Logo"
+          />
+          <p data-i18n="footer_desc">
+            Unidad de Modelado y Análisis (UMA) es un 
+            departamento de investigación de la Universidad Privada del Valle.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer_soluciones">Soluciones</h4>
+          <ul>
+            <li><a href="#nosotros" data-i18n="footer_iot">IoT</a></li>
+            <li><a href="#nosotros" data-i18n="footer_soluciones_medicas">Soluciones Médicas</a></li>
+            <li><a href="#nosotros" data-i18n="footer_agroindustria">Agroindustria</a></li>
+            <li><a href="#nosotros" data-i18n="footer_control_remoto">Control Remoto</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer_servicios">Servicios</h4>
+          <ul>
+            <li><a href="#servicios" data-i18n="footer_industria">Industria 4.0</a></li>
+            <li><a href="#servicios" data-i18n="footer_medio_ambiente">Medio Ambiente</a></li>
+            <li><a href="#servicios" data-i18n="footer_blockchain">Blockchain</a></li>
+            <li><a href="#servicios" data-i18n="footer_ia">Inteligencia Artificial</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer_empresa">Empresa</h4>
+          <ul>
+            <li><a href="#nosotros" data-i18n="footer_sobre_nosotros">Sobre Nosotros</a></li>
+            <li><a href="#contacto" data-i18n="footer_contacto">Contacto</a></li>
+            <li><a href="#proyectos" data-i18n="footer_proyectos">Proyectos</a></li>
+            <li><a href="#publicaciones" data-i18n="footer_publicaciones">Publicaciones</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copyright">
+          &copy; 2025 UMA - Universidad Privada del Valle. Todos los derechos
+          reservados.
+        </p>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+  </body>
+</html>
