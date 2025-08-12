@@ -1,10 +1,10 @@
 <<<<<<< HEAD
-# UMA - Unidad de Microelectrónica y Arquitecturas
-## Universidad del Valle
+# UMA - Unidad de Modelado y Análisis
+## Universidad Privada del Valle
 
 ### 📋 Descripción del Proyecto
 
-Este es el sitio web oficial de la Unidad de Microelectrónica y Arquitecturas (UMA) de la Universidad del Valle. Una plataforma moderna y responsiva que presenta los proyectos de investigación, publicaciones científicas y servicios de la unidad.
+Este es el sitio web oficial de la Unidad de Modelado y Analisis (UMA) de la Universidad Privada del Valle. Una plataforma moderna y responsiva que presenta los proyectos de investigación, publicaciones científicas y servicios de la unidad.
 
 ### 🚀 Características
 
@@ -129,17 +129,17 @@ Duplicar estructura de `.publication-card` en la sección correspondiente.
 ### 📞 Soporte
 
 Para preguntas o soporte técnico:
-- **Email**: info@uma.univalle.edu.co
-- **Teléfono**: +57 (2) 321 2100
-- **Ubicación**: Universidad del Valle, Cali, Colombia
+- **Email**: uma@univalle.edu
+- **Teléfono**: +591 4 4200000
+- **Ubicación**: Campus Univalle, Av. Argentina #2083, Cochabamba, Bolivia
 
 ### 📝 Licencia
 
-© 2024 UMA - Universidad del Valle. Todos los derechos reservados.
+© 2025 UMA - Universidad Privada del Valle. Todos los derechos reservados.
 
 ---
 
-**Desarrollado con ❤️ para la comunidad académica de la Universidad del Valle**
+**Desarrollado con ❤️ para la comunidad académica de la Universidad Privada del Valle**
 =======
 # LandingPageUMA
 Landing page de UMA
