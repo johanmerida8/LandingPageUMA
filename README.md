@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # UMA - Unidad de Modelado y Análisis
 ## Universidad Privada del Valle
 
@@ -143,4 +142,3 @@ Para preguntas o soporte técnico:
 =======
 # LandingPageUMA
 Landing page de UMA
->>>>>>> 7fa28140a6211151a502939f331b6473b2114705
