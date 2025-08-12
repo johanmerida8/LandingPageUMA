@@ -37,8 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize navigation
     initNavigation();
     
+    // Initialize mobile menu
+    initMobileMenu();
+    
     // Initialize language dropdown
     initLangDropdown();
+    
+    // Initialize optimized 3D background
+    init3DBackground();
     
     // Initialize video slider with delay to ensure DOM is ready
     setTimeout(() => {
@@ -98,6 +104,160 @@ function closeLangMenu() {
     if (langMenu && langTrigger) {
         langTrigger.setAttribute('aria-expanded', 'false');
         langMenu.style.display = 'none';
+    }
+}
+
+// Mobile menu functionality
+function initMobileMenu() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const videoNavButtons = document.querySelectorAll('.slider-nav');
+    
+    if (!mobileMenuToggle || !navMenu) {
+        console.warn('Mobile menu elements not found');
+        return;
+    }
+    
+    // Toggle mobile menu
+    mobileMenuToggle.addEventListener('click', function() {
+        const isActive = mobileMenuToggle.classList.contains('active');
+        
+        if (isActive) {
+            // Close menu
+            mobileMenuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            // Show video navigation buttons
+            videoNavButtons.forEach(btn => btn.style.display = 'flex');
+        } else {
+            // Open menu
+            mobileMenuToggle.classList.add('active');
+            navMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Hide video navigation buttons to prevent interference
+            videoNavButtons.forEach(btn => btn.style.display = 'none');
+        }
+    });
+    
+    // Close menu when clicking on a nav link
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            mobileMenuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            // Show video navigation buttons
+            videoNavButtons.forEach(btn => btn.style.display = 'flex');
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!mobileMenuToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            mobileMenuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            // Show video navigation buttons
+            videoNavButtons.forEach(btn => btn.style.display = 'flex');
+        }
+    });
+    
+    // Close menu on window resize if desktop size
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mobileMenuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            // Show video navigation buttons on desktop
+            videoNavButtons.forEach(btn => btn.style.display = 'flex');
+        }
+    });
+}
+
+// Optimized 3D Background Loading
+function init3DBackground() {
+    const heroBackground = document.querySelector('.hero-background');
+    const iframe = heroBackground?.querySelector('iframe');
+    
+    if (!heroBackground || !iframe) {
+        console.warn('3D background elements not found');
+        return;
+    }
+    
+    // Check if device can handle 3D animations
+    const canHandle3D = checkDeviceCapability();
+    
+    if (!canHandle3D) {
+        console.log('Device not suitable for 3D animations, using fallback');
+        heroBackground.style.display = 'none';
+        return;
+    }
+    
+    // Use Intersection Observer for lazy loading
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                loadOptimized3D(iframe, heroBackground);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '50px'
+    });
+    
+    observer.observe(heroBackground);
+}
+
+function checkDeviceCapability() {
+    // Check various performance indicators
+    const isMobile = window.innerWidth <= 768;
+    const isLowEnd = navigator.hardwareConcurrency <= 2;
+    const hasSlowConnection = navigator.connection && 
+        (navigator.connection.effectiveType === 'slow-2g' || 
+         navigator.connection.effectiveType === '2g');
+    
+    // Disable 3D on mobile, low-end devices, or slow connections
+    return !isMobile && !isLowEnd && !hasSlowConnection;
+}
+
+function loadOptimized3D(iframe, container) {
+    // Add loading placeholder
+    container.style.background = 'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)';
+    
+    // Use requestIdleCallback for non-blocking loading
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+            load3DIframe(iframe, container);
+        });
+    } else {
+        // Fallback for browsers without requestIdleCallback
+        setTimeout(() => {
+            load3DIframe(iframe, container);
+        }, 100);
+    }
+}
+
+function load3DIframe(iframe, container) {
+    // Add loading event listener
+    iframe.addEventListener('load', () => {
+        container.classList.add('loaded');
+        console.log('3D background loaded successfully');
+    });
+    
+    // Add error handling
+    iframe.addEventListener('error', () => {
+        console.warn('3D background failed to load, using fallback');
+        container.style.display = 'none';
+    });
+    
+    // Optimize iframe attributes for performance
+    iframe.setAttribute('loading', 'lazy');
+    iframe.setAttribute('importance', 'low');
+    
+    // Trigger loading by updating src if not already set
+    if (!iframe.src) {
+        iframe.src = iframe.getAttribute('data-src') || iframe.src;
     }
 }
 
@@ -540,11 +700,14 @@ const I18N = {
         footer_medio_ambiente: "Medio Ambiente",
         footer_blockchain: "Blockchain",
         footer_ia: "Inteligencia Artificial",
-        footer_empresa: "Empresa",
-        footer_sobre_nosotros: "Sobre Nosotros",
-        footer_contacto: "Contacto",
+        footer_enlaces_rapidos: "Enlaces Rápidos",
+        footer_inicio: "Inicio",
+        footer_nosotros: "Nosotros",
+        footer_servicios_link: "Servicios",
         footer_proyectos: "Proyectos",
         footer_publicaciones: "Publicaciones",
+        footer_contacto_link: "Contacto",
+        footer_contacto: "Contacto",
         footer_copyright:
             "© 2025 UMA - Universidad Privada del Valle. Todos los derechos reservados.",
     },
@@ -676,11 +839,14 @@ const I18N = {
         footer_medio_ambiente: "Environment",
         footer_blockchain: "Blockchain",
         footer_ia: "Artificial Intelligence",
-        footer_empresa: "Company",
-        footer_sobre_nosotros: "About Us",
-        footer_contacto: "Contact",
+        footer_enlaces_rapidos: "Quick Links",
+        footer_inicio: "Home",
+        footer_nosotros: "About Us",
+        footer_servicios_link: "Services",
         footer_proyectos: "Projects",
         footer_publicaciones: "Publications",
+        footer_contacto_link: "Contact",
+        footer_contacto: "Contact",
         footer_copyright:
             "© 2025 UMA - Universidad Privada del Valle. All rights reserved.",
     },
@@ -813,11 +979,14 @@ const I18N = {
         footer_medio_ambiente: "Meio Ambiente",
         footer_blockchain: "Blockchain",
         footer_ia: "Inteligência Artificial",
-        footer_empresa: "Empresa",
-        footer_sobre_nosotros: "Sobre Nós",
-        footer_contacto: "Contato",
+        footer_enlaces_rapidos: "Links Rápidos",
+        footer_inicio: "Início",
+        footer_nosotros: "Sobre Nós",
+        footer_servicios_link: "Serviços",
         footer_proyectos: "Projetos",
         footer_publicaciones: "Publicações",
+        footer_contacto_link: "Contato",
+        footer_contacto: "Contato",
         footer_copyright:
             "© 2025 UMA – Universidad Privada del Valle. Todos os direitos reservados.",
     },

@@ -8,7 +8,7 @@
     </title>
     <meta
       name="description"
-      content="Unidad de Microelectrónica y Arquitecturas de la Universidad del Valle - Investigación, desarrollo e innovación en IoT, IA, Blockchain y más."
+      content="Unidad de Modelado y Analisis de la Universidad Privada del Valle - Investigación, desarrollo e innovación en IoT, IA, Blockchain y más."
     />
 
     <!-- External Libraries -->
@@ -18,10 +18,8 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <!-- In your <head> section, replace the current Inter font with: -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css" />
@@ -33,11 +31,7 @@
       <nav class="nav-container">
         <!-- Logo Section -->
         <div class="nav-left">
-          <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo_uma-S2843pPd763lL74CEqxHmUSy4IibEP.png"
-            alt="UMA Logo"
-            class="logo"
-          />
+          <!-- Logo moved to hero section -->
         </div>
         
         <!-- Navigation Menu (Centered) -->
@@ -49,6 +43,13 @@
           <li><a href="#publicaciones" data-i18n="nav_publicaciones">Publicaciones</a></li>
           <li><a href="#contacto" data-i18n="nav_contacto">Contacto</a></li>
         </ul>
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         
         <!-- Right Section (Theme Toggle, Language) -->
         <div class="nav-right">
@@ -96,14 +97,28 @@
       <!-- 3D Animation Background -->
       <div class="hero-background">
         <!-- <iframe src='https://my.spline.design/retrofuturisticcircuitloop-CF4zDUVltoqILNvWMKCpCkfu/' frameborder='0' width='100%' height='100%'></iframe> -->
-        <iframe src='https://my.spline.design/galaxy-WT8ugdhSf4ABaqOfpjyXT8Di/' frameborder='0' width='100%' height='100%'></iframe>
+        <iframe 
+          data-src='https://my.spline.design/galaxy-WT8ugdhSf4ABaqOfpjyXT8Di/' 
+          src='https://my.spline.design/galaxy-WT8ugdhSf4ABaqOfpjyXT8Di/'
+          frameborder='0' 
+          width='100%' 
+          height='100%'
+          loading='lazy'
+          importance='low'
+          title='3D Galaxy Animation Background'>
+        </iframe>
       </div>
       
       <div class="hero-container">
         <div class="hero-content-centered">
-          <h1>
-            <span data-i18n="hero_title_a">Llevamos el desarrollo</span> <span class="highlight" data-i18n="hero_highlight">tecnológico</span><span data-i18n="hero_title_b"> a un nuevo nivel</span>
-          </h1>
+          <!-- UMA Logo as main hero element -->
+          <div class="hero-logo">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo_uma-S2843pPd763lL74CEqxHmUSy4IibEP.png"
+              alt="UMA - Unidad de Modelado y Análisis"
+              class="hero-logo-img"
+            />
+          </div>
           <p data-i18n="hero_paragraph">
             Investigación e innovación en ingeniería biomédica, electrónica y
             sistemas informáticos para resolver los desafíos del mañana.
@@ -885,15 +900,6 @@
           </div>
         </div>
         <div class="footer-section">
-          <h4 data-i18n="footer_soluciones">Soluciones</h4>
-          <ul>
-            <li><a href="#nosotros" data-i18n="footer_iot">IoT</a></li>
-            <li><a href="#nosotros" data-i18n="footer_soluciones_medicas">Soluciones Médicas</a></li>
-            <li><a href="#nosotros" data-i18n="footer_agroindustria">Agroindustria</a></li>
-            <li><a href="#nosotros" data-i18n="footer_control_remoto">Control Remoto</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
           <h4 data-i18n="footer_servicios">Servicios</h4>
           <ul>
             <li><a href="#servicios" data-i18n="footer_industria">Industria 4.0</a></li>
@@ -903,12 +909,23 @@
           </ul>
         </div>
         <div class="footer-section">
-          <h4 data-i18n="footer_empresa">Empresa</h4>
+          <h4 data-i18n="footer_enlaces_rapidos">Enlaces Rápidos</h4>
           <ul>
-            <li><a href="#nosotros" data-i18n="footer_sobre_nosotros">Sobre Nosotros</a></li>
-            <li><a href="#contacto" data-i18n="footer_contacto">Contacto</a></li>
+            <li><a href="#inicio" data-i18n="footer_inicio">Inicio</a></li>
+            <li><a href="#nosotros" data-i18n="footer_nosotros">Nosotros</a></li>
+            <li><a href="#servicios" data-i18n="footer_servicios_link">Servicios</a></li>
             <li><a href="#proyectos" data-i18n="footer_proyectos">Proyectos</a></li>
             <li><a href="#publicaciones" data-i18n="footer_publicaciones">Publicaciones</a></li>
+            <li><a href="#contacto" data-i18n="footer_contacto_link">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 data-i18n="footer_contacto">Contacto</h4>
+          <ul class="footer-contact-info">
+            <li><i class="fas fa-envelope"></i> uma@univalle.edu</li>
+            <li><i class="fas fa-phone"></i> +591 4 4200000</li>
+            <li><i class="fas fa-map-marker-alt"></i> Campus Univalle, Av. Argentina #2083, Cochabamba, Bolivia</li>
+            <li><i class="fas fa-globe"></i> uma.blokislabs.com</li>
           </ul>
         </div>
       </div>
@@ -919,7 +936,7 @@
         </p>
       </div>
     </footer>
-
+    
     <!-- JavaScript -->
     <script src="script.js"></script>
   </body>
