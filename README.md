@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # UMA - Unidad de Microelectrónica y Arquitecturas
 ## Universidad del Valle
 
@@ -139,3 +140,7 @@ Para preguntas o soporte técnico:
 ---
 
 **Desarrollado con ❤️ para la comunidad académica de la Universidad del Valle**
+=======
+# LandingPageUMA
+Landing page de UMA
+>>>>>>> 7fa28140a6211151a502939f331b6473b2114705
