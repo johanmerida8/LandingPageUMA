@@ -43,6 +43,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize language dropdown
     initLangDropdown();
     
+    // Initialize publications filter
+    initPublicationsFilter();
+    
+    // Initialize footer service navigation
+    initFooterServiceNavigation();
+    
+    // Initialize logo animation
+    initLogoAnimation();
+    
+    // Initialize carousel
+    initCarousel();
+    
+    // Initialize timeline
+    initTimeline();
+    
     // Initialize optimized 3D background
     init3DBackground();
     
@@ -89,12 +104,30 @@ function handleNavClick(e) {
             // Close language menu if open
             closeLangMenu();
             
+            // Close mobile menu if open
+            closeMobileMenu();
+            
             // Smooth scroll to target
             target.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
         }
+    }
+}
+
+// Function to close mobile menu
+function closeMobileMenu() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const videoNavButtons = document.querySelectorAll('.slider-nav');
+    
+    if (mobileMenuToggle && navMenu) {
+        mobileMenuToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        // Show video navigation buttons
+        videoNavButtons.forEach(btn => btn.style.display = 'flex');
     }
 }
 
@@ -118,17 +151,21 @@ function initMobileMenu() {
         return;
     }
     
+    // Ensure menu is closed by default
+    mobileMenuToggle.classList.remove('active');
+    navMenu.classList.remove('active');
+    document.body.style.overflow = 'auto';
+    
     // Toggle mobile menu
-    mobileMenuToggle.addEventListener('click', function() {
+    mobileMenuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
         const isActive = mobileMenuToggle.classList.contains('active');
         
         if (isActive) {
             // Close menu
-            mobileMenuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            // Show video navigation buttons
-            videoNavButtons.forEach(btn => btn.style.display = 'flex');
+            closeMobileMenu();
         } else {
             // Open menu
             mobileMenuToggle.classList.add('active');
@@ -139,39 +176,32 @@ function initMobileMenu() {
         }
     });
     
-    // Close menu when clicking on a nav link
+    // Close menu when clicking on a nav link (backup - the main handler is in handleNavClick)
     const navLinks = navMenu.querySelectorAll('a');
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            mobileMenuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            // Show video navigation buttons
-            videoNavButtons.forEach(btn => btn.style.display = 'flex');
+            // Small delay to ensure the main navigation handler runs first
+            setTimeout(() => {
+                closeMobileMenu();
+            }, 10);
         });
     });
     
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
         if (!mobileMenuToggle.contains(e.target) && !navMenu.contains(e.target)) {
-            mobileMenuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            // Show video navigation buttons
-            videoNavButtons.forEach(btn => btn.style.display = 'flex');
+            closeMobileMenu();
         }
     });
     
     // Close menu on window resize if desktop size
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
-            mobileMenuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            // Show video navigation buttons on desktop
-            videoNavButtons.forEach(btn => btn.style.display = 'flex');
+            closeMobileMenu();
         }
     });
+    
+    console.log('Mobile menu initialized successfully');
 }
 
 // Optimized 3D Background Loading
@@ -301,6 +331,24 @@ if (contactForm) {
     });
 }
 
+// Toggle company field based on radio button selection
+function toggleCompanyField() {
+    const empresaSi = document.getElementById('empresa_si');
+    const companyField = document.getElementById('company-field');
+    const companyInput = document.getElementById('company');
+    
+    if (empresaSi && companyField && companyInput) {
+        if (empresaSi.checked) {
+            companyField.style.display = 'block';
+            companyInput.required = true;
+        } else {
+            companyField.style.display = 'none';
+            companyInput.required = false;
+            companyInput.value = ''; // Clear the field when hidden
+        }
+    }
+}
+
 // Intersection Observer for animations
 const observerOptions = {
     threshold: 0.1,
@@ -419,6 +467,91 @@ function showSlide(index) {
     });
 }
 
+// Publications horizontal pagination with smooth sliding animation
+let currentPubPage = 1;
+const totalPubPages = 3; // Update this based on how many pages you have
+
+function changePublicationPage(direction) {
+    const newPage = currentPubPage + direction;
+    
+    if (newPage >= 1 && newPage <= totalPubPages) {
+        currentPubPage = newPage;
+        
+        // Calculate transform position for horizontal sliding
+        const translateX = -((currentPubPage - 1) * 100);
+        const publicationsGrid = document.querySelector('.publications-grid');
+        
+        if (publicationsGrid) {
+            publicationsGrid.style.transform = `translateX(${translateX}%)`;
+        }
+        
+        // Update page indicator
+        const currentPageElement = document.getElementById('currentPubPage');
+        if (currentPageElement) {
+            currentPageElement.textContent = currentPubPage;
+        }
+        
+        // Update button states
+        const prevBtn = document.querySelector('.pub-nav-btn.prev');
+        const nextBtn = document.querySelector('.pub-nav-btn.next');
+        
+        if (prevBtn) prevBtn.disabled = currentPubPage === 1;
+        if (nextBtn) nextBtn.disabled = currentPubPage === totalPubPages;
+        
+        // Add a subtle animation effect to the cards
+        const currentPageCards = document.querySelectorAll('.publication-page:nth-child(' + currentPubPage + ') .publication-card');
+        currentPageCards.forEach((card, index) => {
+            card.style.animation = `fadeInScale 0.4s ease-out ${index * 0.1}s both`;
+        });
+    }
+}
+
+// Initialize publications pagination
+function initPublicationsPagination() {
+    // Set initial button states
+    const prevBtn = document.querySelector('.pub-nav-btn.prev');
+    const nextBtn = document.querySelector('.pub-nav-btn.next');
+    
+    if (prevBtn) prevBtn.disabled = true;
+    if (nextBtn) nextBtn.disabled = totalPubPages <= 1;
+    
+    // Set total pages
+    const totalPagesElement = document.getElementById('totalPubPages');
+    if (totalPagesElement) {
+        totalPagesElement.textContent = totalPubPages;
+    }
+    
+    // Initialize first page animation
+    const firstPageCards = document.querySelectorAll('.publication-page:first-child .publication-card');
+    firstPageCards.forEach((card, index) => {
+        card.style.animation = `fadeInScale 0.4s ease-out ${index * 0.1}s both`;
+    });
+}
+
+// Add CSS animation keyframes dynamically
+function addPublicationAnimations() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    addPublicationAnimations();
+    initPublicationsPagination();
+});
+
 function changeSlide(direction) {
     const newIndex = currentSlideIndex + direction;
     showSlide(newIndex);
@@ -430,6 +563,39 @@ function currentSlide(index) {
 
 // Initialize slider when DOM is ready
 // (This will be handled in the main DOMContentLoaded event listener)
+
+// Publications Filter System
+function initPublicationsFilter() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const filterContents = document.querySelectorAll('.filter-content');
+    
+    if (filterBtns.length === 0 || filterContents.length === 0) {
+        return; // Exit if elements don't exist
+    }
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filterType = btn.dataset.filter;
+            
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            // Hide all filter contents
+            filterContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected filter content
+            const targetContent = document.getElementById(`${filterType}-content`);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+}
 
 // Language dropdown functionality
 let langDropdownInitialized = false;
@@ -560,6 +726,8 @@ function initLangDropdown() {
     console.log('Language dropdown setup completed');
 }
 
+// Old togglePublications function removed - now using horizontal pagination
+
 // Internationalization (i18n) System
 const I18N = {
     es: {
@@ -657,18 +825,106 @@ const I18N = {
         projects_titulo_b: "Proyectos",
         projects_sub: "Descubre nuestros últimos proyectos de investigación y desarrollo tecnológico",
 
+        // Project Videos
+        project_video1_title: "Proyecto UMA - Desarrollo Tecnológico",
+        project_video1_desc: "Descubre nuestros avances en investigación y desarrollo de tecnologías innovadoras para transformar el futuro.",
+        project_video2_title: "Innovación UMA - Soluciones Inteligentes",
+        project_video2_desc: "Conoce nuestras soluciones tecnológicas avanzadas que están revolucionando múltiples industrias.",
+        project_video3_title: "UMA - Investigación y Desarrollo",
+        project_video3_desc: "Explora nuestros proyectos de investigación que están definiendo el futuro de la tecnología.",
+        project_video4_title: "UMA - Tecnología IoT Avanzada",
+        project_video4_desc: "Descubre nuestras soluciones IoT que están revolucionando el monitoreo ambiental y industrial.",
+        project_video5_title: "UMA - Sistemas Inteligentes",
+        project_video5_desc: "Implementación de sistemas inteligentes para automatización y control industrial avanzado.",
+        project_video6_title: "UMA - Monitoreo Ambiental",
+        project_video6_desc: "Soluciones avanzadas para el monitoreo ambiental y gestión sostenible de recursos.",
+        project_video7_title: "UMA - Innovación Biomédica",
+        project_video7_desc: "Desarrollo de tecnologías biomédicas innovadoras para mejorar la calidad de vida.",
+        project_video8_title: "UMA - Redes de Sensores",
+        project_video8_desc: "Implementación de redes de sensores distribuidos para aplicaciones industriales y ambientales.",
+        project_video9_title: "UMA - Automatización Industrial",
+        project_video9_desc: "Soluciones de automatización para optimizar procesos industriales con tecnología de vanguardia.",
+        project_video10_title: "UMA - Análisis de Datos",
+        project_video10_desc: "Análisis avanzado de datos para optimización de procesos y toma de decisiones inteligentes.",
+        project_video11_title: "UMA - Energías Renovables",
+        project_video11_desc: "Investigación en energías renovables y sistemas de gestión energética sostenible.",
+        project_video12_title: "UMA - Blockchain Aplicado",
+        project_video12_desc: "Implementación de tecnología blockchain para trazabilidad y seguridad en cadenas de suministro.",
+        project_video13_title: "UMA - Inteligencia Artificial",
+        project_video13_desc: "Desarrollo de algoritmos de IA para procesamiento de datos y automatización inteligente.",
+        project_video14_title: "UMA - Futuro Tecnológico",
+        project_video14_desc: "Visión del futuro tecnológico y las innovaciones que están transformando el mundo.",
+        project_video_counter: "de",
+
+        // Development Fields / Carousel
+        dev_fields_title: "Nuestros Campos de Desarrollo",
+        carousel_agro: "Soluciones para la Agroindustria",
+        carousel_iot: "Soluciones e Implementaciones IoT",
+        carousel_control: "Control y Monitorio Remoto",
+        carousel_medical: "Soluciones Médicas",
+
+        // Timeline
+        timeline_titulo_a: "Nuestra ",
+        timeline_titulo_b: "Trayectoria",
+        timeline_sub: "Un recorrido por nuestros principales logros e hitos institucionales",
+        timeline_2020_title: "Alianza Estratégica",
+        timeline_2020_subtitle: "Colaboración con el Instituto Tecnológico de Massachusetts (MIT)",
+        timeline_2020_desc: "Establecimos una alianza estratégica con MIT para el intercambio de conocimientos y desarrollo conjunto de proyectos de investigación en tecnologías emergentes.",
+        timeline_2021_title: "Patente Internacional",
+        timeline_2021_subtitle: "Por el desarrollo de prótesis biónicas con sensores táctiles avanzados",
+        timeline_2021_desc: "Obtuvimos reconocimiento internacional por nuestro innovador desarrollo en prótesis biónicas que incorporan sensores táctiles de última generación.",
+        timeline_2022_title: "Reconocimiento Internacional",
+        timeline_2022_subtitle: "Seleccionados entre los 10 mejores centros de investigación en Latinoamérica",
+        timeline_2022_desc: "Fuimos reconocidos como uno de los 10 mejores centros de investigación en Latinoamérica por nuestras contribuciones al desarrollo tecnológico regional.",
+        timeline_2023_title: "Premio Nacional de Innovación",
+        timeline_2023_subtitle: "Por el desarrollo del Sistema de Monitoreo Cardíaco con IA predictiva",
+        timeline_2023_desc: "Recibimos el prestigioso Premio Nacional de Innovación por nuestro revolucionario sistema de monitoreo cardíaco que utiliza inteligencia artificial predictiva.",
+        timeline_2025_title: "DocIA - Reconocimiento Internacional",
+        timeline_2025_subtitle: "Emprendedores de Alto Impacto en Incuba Unión Tecnológico y VCILAT 2025",
+        timeline_2025_desc: "Nuestros estudiantes desarrollaron DocIA, una plataforma de atención médica primaria con IA que fue reconocida como emprendimiento de alto impacto, obteniendo premios económicos, becas de posgrado y visibilidad internacional.",
+
         // Publications
         publications_titulo_a: "Nuestras ",
         publications_titulo_b: "Publicaciones",
         publications_sub: "Conoce nuestras publicaciones científicas y artículos de investigación más destacados",
-        pub_ieee_titulo: "IEEE Research Article",
+        filter_articles: "Artículos",
+        filter_profiles: "Perfiles",
+        
+        // Publication details
+        pub_ieee_title: "IEEE Research Article 2025",
+        pub_springer_title: "Capítulo de Libro - Springer",
+        pub_researchgate_title: "Design and Development of a Podiatric Station Prototype",
         pub_ieee_type: "IEEE Xplore",
+        pub_springer_type: "Book Chapter",
+        pub_researchgate_type: "Research Paper",
         pub_fuente: "Fuente:",
         pub_ieee_fuente: "IEEE Xplore Digital Library",
+        pub_springer_fuente: "Springer",
+        pub_researchgate_fuente: "ResearchGate",
         pub_año: "Año:",
         pub_doi: "DOI:",
-        pub_ieee_desc: "Accede a este artículo científico de investigación disponible en la biblioteca digital IEEE Xplore.",
+        pub_tema: "Tema:",
+        pub_autores: "Autores:",
+        pub_springer_autores: "Marco Fabian Borda Wiegert, Mauricio Marcelo Peredo Claros, Eynar Calle Viles, Rommer Alex Ortega Martinez",
+        pub_researchgate_tema: "Diagnosis of Diabetic Foot",
+        pub_ieee_desc: "Investigación avanzada en tecnologías emergentes para sistemas inteligentes y análisis de datos.",
+        pub_springer_desc: "Contribución científica en el área de modelado y análisis aplicado a sistemas complejos.",
+        pub_researchgate_desc: "Desarrollo de prototipo para estación podológica aplicada al diagnóstico del pie diabético.",
         pub_ver: "Ver Publicación",
+        
+        // Researcher Profiles
+        profile_ieee_title: "IEEE Author Profile",
+        profile_ieee_desc: "Perfil de autor en IEEE Xplore con múltiples publicaciones en tecnologías emergentes.",
+        profile_ieee_stat: "Publicaciones IEEE",
+        profile_ieee_link: "Ver Perfil IEEE",
+        profile_orcid_title: "ORCID Researcher",
+        profile_orcid_desc: "Perfil ORCID con investigaciones en ingeniería biomédica y sistemas inteligentes.",
+        profile_orcid_stat: "ORCID: 0000-0003-1477-2813",
+        profile_orcid_link: "Ver Perfil ORCID",
+        profile_researchgate_title: "ResearchGate",
+        profile_researchgate_desc: "Investigador especializado en desarrollo de tecnologías médicas y análisis de datos biomédicos.",
+        profile_researchgate_stat: "ResearchGate",
+        profile_researchgate_link: "Ver Perfil ResearchGate",
 
         // Contact
         contact_titulo_a: "¿Listo para ",
@@ -679,11 +935,14 @@ const I18N = {
         contact_direccion: "Campus Univalle, Av. Argentina #2083, Cochabamba, Bolivia",
         contact_nombre_label: "Nombre completo",
         contact_email_label: "Correo electrónico", 
-        contact_empresa_label: "Empresa",
+        contact_empresa_type_label: "¿Tienes una empresa?",
+        contact_empresa_si: "Sí, tengo empresa",
+        contact_empresa_no: "No, soy cliente individual",
+        contact_empresa_label: "Nombre de la empresa",
         contact_mensaje_label: "Mensaje",
         contact_nombre_placeholder: "Tu nombre",
         contact_email_placeholder: "tu@email.com",
-        contact_empresa_placeholder: "Tu empresa",
+        contact_empresa_placeholder: "Nombre de tu empresa",
         contact_mensaje_placeholder: "Cuéntanos sobre tu proyecto...",
         contact_enviar: "Enviar mensaje",
 
@@ -697,8 +956,10 @@ const I18N = {
         footer_control_remoto: "Control Remoto",
         footer_servicios: "Servicios",
         footer_industria: "Industria 4.0",
+        footer_agroindustria: "Agroindustria",
         footer_medio_ambiente: "Medio Ambiente",
         footer_blockchain: "Blockchain",
+        footer_biomedicas: "Soluciones Biomédicas",
         footer_ia: "Inteligencia Artificial",
         footer_enlaces_rapidos: "Enlaces Rápidos",
         footer_inicio: "Inicio",
@@ -799,17 +1060,106 @@ const I18N = {
         projects_titulo_b: "Projects",
         projects_sub: "Discover our latest research and technological development projects",
 
+        // Project Videos
+        project_video1_title: "UMA Project - Technological Development",
+        project_video1_desc: "Discover our advances in research and development of innovative technologies to transform the future.",
+        project_video2_title: "UMA Innovation - Smart Solutions",
+        project_video2_desc: "Learn about our advanced technological solutions that are revolutionizing multiple industries.",
+        project_video3_title: "UMA - Research and Development",
+        project_video3_desc: "Explore our research projects that are defining the future of technology.",
+        project_video4_title: "UMA - Advanced IoT Technology",
+        project_video4_desc: "Discover our IoT solutions that are revolutionizing environmental and industrial monitoring.",
+        project_video5_title: "UMA - Intelligent Systems",
+        project_video5_desc: "Implementation of intelligent systems for automation and advanced industrial control.",
+        project_video6_title: "UMA - Environmental Monitoring",
+        project_video6_desc: "Advanced solutions for environmental monitoring and sustainable resource management.",
+        project_video7_title: "UMA - Biomedical Innovation",
+        project_video7_desc: "Development of innovative biomedical technologies to improve quality of life.",
+        project_video8_title: "UMA - Sensor Networks",
+        project_video8_desc: "Implementation of distributed sensor networks for industrial and environmental applications.",
+        project_video9_title: "UMA - Industrial Automation",
+        project_video9_desc: "Automation solutions to optimize industrial processes with cutting-edge technology.",
+        project_video10_title: "UMA - Data Analysis",
+        project_video10_desc: "Advanced data analysis for process optimization and intelligent decision making.",
+        project_video11_title: "UMA - Renewable Energy",
+        project_video11_desc: "Research in renewable energy and sustainable energy management systems.",
+        project_video12_title: "UMA - Applied Blockchain",
+        project_video12_desc: "Implementation of blockchain technology for traceability and security in supply chains.",
+        project_video13_title: "UMA - Artificial Intelligence",
+        project_video13_desc: "Development of AI algorithms for data processing and intelligent automation.",
+        project_video14_title: "UMA - Technological Future",
+        project_video14_desc: "Vision of the technological future and innovations that are transforming the world.",
+        project_video_counter: "of",
+
+        // Development Fields / Carousel
+        dev_fields_title: "Our Development Fields",
+        carousel_agro: "Solutions for Agro-Industry",
+        carousel_iot: "IoT Solutions and Implementations",
+        carousel_control: "Remote Control and Monitoring",
+        carousel_medical: "Medical Solutions",
+
+        // Timeline
+        timeline_titulo_a: "Our ",
+        timeline_titulo_b: "Journey",
+        timeline_sub: "A journey through our main achievements and institutional milestones",
+        timeline_2020_title: "Strategic Alliance",
+        timeline_2020_subtitle: "Collaboration with Massachusetts Institute of Technology (MIT)",
+        timeline_2020_desc: "We established a strategic alliance with MIT for knowledge exchange and joint development of research projects in emerging technologies.",
+        timeline_2021_title: "International Patent",
+        timeline_2021_subtitle: "For the development of bionic prosthetics with advanced tactile sensors",
+        timeline_2021_desc: "We obtained international recognition for our innovative development in bionic prosthetics that incorporate cutting-edge tactile sensors.",
+        timeline_2022_title: "International Recognition",
+        timeline_2022_subtitle: "Selected among the 10 best research centers in Latin America",
+        timeline_2022_desc: "We were recognized as one of the 10 best research centers in Latin America for our contributions to regional technological development.",
+        timeline_2023_title: "National Innovation Award",
+        timeline_2023_subtitle: "For the development of the Cardiac Monitoring System with predictive AI",
+        timeline_2023_desc: "We received the prestigious National Innovation Award for our revolutionary cardiac monitoring system that uses predictive artificial intelligence.",
+        timeline_2025_title: "DocIA - International Recognition",
+        timeline_2025_subtitle: "High Impact Entrepreneurs at Incuba Unión Tecnológico and VCILAT 2025",
+        timeline_2025_desc: "Our students developed DocIA, an AI-powered primary healthcare platform that was recognized as a high-impact venture, obtaining economic prizes, graduate scholarships, and international visibility.",
+
+        // Publications
         publications_titulo_a: "Our ",
         publications_titulo_b: "Publications",
         publications_sub: "Learn about our featured scientific publications and research articles",
-        pub_ieee_titulo: "IEEE Research Article",
+        filter_articles: "Articles",
+        filter_profiles: "Profiles",
+        
+        // Publication details
+        pub_ieee_title: "IEEE Research Article 2025",
+        pub_springer_title: "Book Chapter - Springer",
+        pub_researchgate_title: "Design and Development of a Podiatric Station Prototype",
         pub_ieee_type: "IEEE Xplore",
+        pub_springer_type: "Book Chapter",
+        pub_researchgate_type: "Research Paper",
         pub_fuente: "Source:",
         pub_ieee_fuente: "IEEE Xplore Digital Library",
+        pub_springer_fuente: "Springer",
+        pub_researchgate_fuente: "ResearchGate",
         pub_año: "Year:",
         pub_doi: "DOI:",
-        pub_ieee_desc: "Access this research article available in the IEEE Xplore digital library.",
+        pub_tema: "Topic:",
+        pub_autores: "Authors:",
+        pub_springer_autores: "Marco Fabian Borda Wiegert, Mauricio Marcelo Peredo Claros, Eynar Calle Viles, Rommer Alex Ortega Martinez",
+        pub_researchgate_tema: "Diagnosis of Diabetic Foot",
+        pub_ieee_desc: "Advanced research in emerging technologies for intelligent systems and data analysis.",
+        pub_springer_desc: "Scientific contribution in the area of modeling and analysis applied to complex systems.",
+        pub_researchgate_desc: "Development of prototype for podiatric station applied to diabetic foot diagnosis.",
         pub_ver: "View Publication",
+        
+        // Researcher Profiles
+        profile_ieee_title: "IEEE Author Profile",
+        profile_ieee_desc: "Author profile in IEEE Xplore with multiple publications in emerging technologies.",
+        profile_ieee_stat: "IEEE Publications",
+        profile_ieee_link: "View IEEE Profile",
+        profile_orcid_title: "ORCID Researcher",
+        profile_orcid_desc: "ORCID profile with research in biomedical engineering and intelligent systems.",
+        profile_orcid_stat: "ORCID: 0000-0003-1477-2813",
+        profile_orcid_link: "View ORCID Profile",
+        profile_researchgate_title: "ResearchGate",
+        profile_researchgate_desc: "Researcher specialized in medical technology development and biomedical data analysis.",
+        profile_researchgate_stat: "ResearchGate",
+        profile_researchgate_link: "View ResearchGate Profile",
 
         contact_titulo_a: "Ready to ",
         contact_titulo_b: "collaborate",
@@ -819,11 +1169,14 @@ const I18N = {
         contact_direccion: "Campus Univalle, Av. Argentina #2083, Cochabamba, Bolivia",
         contact_nombre_label: "Full name",
         contact_email_label: "Email",
-        contact_empresa_label: "Company",
+        contact_empresa_type_label: "Do you have a business?",
+        contact_empresa_si: "Yes, I have a business",
+        contact_empresa_no: "No, I'm an individual client",
+        contact_empresa_label: "Company name",
         contact_mensaje_label: "Message",
         contact_nombre_placeholder: "Your name",
         contact_email_placeholder: "your@email.com",
-        contact_empresa_placeholder: "Your company",
+        contact_empresa_placeholder: "Your company name",
         contact_mensaje_placeholder: "Tell us about your project...",
         contact_enviar: "Send message",
 
@@ -836,8 +1189,10 @@ const I18N = {
         footer_control_remoto: "Remote Control",
         footer_servicios: "Services",
         footer_industria: "Industry 4.0",
+        footer_agroindustria: "Agro-industry",
         footer_medio_ambiente: "Environment",
         footer_blockchain: "Blockchain",
+        footer_biomedicas: "Biomedical Solutions",
         footer_ia: "Artificial Intelligence",
         footer_enlaces_rapidos: "Quick Links",
         footer_inicio: "Home",
@@ -939,17 +1294,106 @@ const I18N = {
         projects_titulo_b: "Projetos",
         projects_sub: "Descubra nossos últimos projetos de pesquisa e desenvolvimento tecnológico",
 
+        // Project Videos
+        project_video1_title: "Projeto UMA - Desenvolvimento Tecnológico",
+        project_video1_desc: "Descubra nossos avanços em pesquisa e desenvolvimento de tecnologias inovadoras para transformar o futuro.",
+        project_video2_title: "Inovação UMA - Soluções Inteligentes",
+        project_video2_desc: "Conheça nossas soluções tecnológicas avançadas que estão revolucionando múltiplas indústrias.",
+        project_video3_title: "UMA - Pesquisa e Desenvolvimento",
+        project_video3_desc: "Explore nossos projetos de pesquisa que estão definindo o futuro da tecnologia.",
+        project_video4_title: "UMA - Tecnologia IoT Avançada",
+        project_video4_desc: "Descubra nossas soluções IoT que estão revolucionando o monitoramento ambiental e industrial.",
+        project_video5_title: "UMA - Sistemas Inteligentes",
+        project_video5_desc: "Implementação de sistemas inteligentes para automação e controle industrial avançado.",
+        project_video6_title: "UMA - Monitoramento Ambiental",
+        project_video6_desc: "Soluções avançadas para monitoramento ambiental e gestão sustentável de recursos.",
+        project_video7_title: "UMA - Inovação Biomédica",
+        project_video7_desc: "Desenvolvimento de tecnologias biomédicas inovadoras para melhorar a qualidade de vida.",
+        project_video8_title: "UMA - Redes de Sensores",
+        project_video8_desc: "Implementação de redes de sensores distribuídos para aplicações industriais e ambientais.",
+        project_video9_title: "UMA - Automação Industrial",
+        project_video9_desc: "Soluções de automação para otimizar processos industriais com tecnologia de ponta.",
+        project_video10_title: "UMA - Análise de Dados",
+        project_video10_desc: "Análise avançada de dados para otimização de processos e tomada de decisões inteligentes.",
+        project_video11_title: "UMA - Energias Renováveis",
+        project_video11_desc: "Pesquisa em energias renováveis e sistemas de gestão energética sustentável.",
+        project_video12_title: "UMA - Blockchain Aplicado",
+        project_video12_desc: "Implementação de tecnologia blockchain para rastreabilidade e segurança em cadeias de suprimentos.",
+        project_video13_title: "UMA - Inteligência Artificial",
+        project_video13_desc: "Desenvolvimento de algoritmos de IA para processamento de dados e automação inteligente.",
+        project_video14_title: "UMA - Futuro Tecnológico",
+        project_video14_desc: "Visão do futuro tecnológico e das inovações que estão transformando o mundo.",
+        project_video_counter: "de",
+
+        // Development Fields / Carousel
+        dev_fields_title: "Nossos Campos de Desenvolvimento",
+        carousel_agro: "Soluções para a Agroindústria",
+        carousel_iot: "Soluções e Implementações IoT",
+        carousel_control: "Controle e Monitoramento Remoto",
+        carousel_medical: "Soluções Médicas",
+
+        // Timeline
+        timeline_titulo_a: "Nossa ",
+        timeline_titulo_b: "Trajetória",
+        timeline_sub: "Um percurso por nossas principais conquistas e marcos institucionais",
+        timeline_2020_title: "Aliança Estratégica",
+        timeline_2020_subtitle: "Colaboração com o Instituto de Tecnologia de Massachusetts (MIT)",
+        timeline_2020_desc: "Estabelecemos uma aliança estratégica com o MIT para intercâmbio de conhecimentos e desenvolvimento conjunto de projetos de pesquisa em tecnologias emergentes.",
+        timeline_2021_title: "Patente Internacional",
+        timeline_2021_subtitle: "Pelo desenvolvimento de próteses biônicas com sensores táteis avançados",
+        timeline_2021_desc: "Obtivemos reconhecimento internacional por nosso desenvolvimento inovador em próteses biônicas que incorporam sensores táteis de última geração.",
+        timeline_2022_title: "Reconhecimento Internacional",
+        timeline_2022_subtitle: "Selecionados entre os 10 melhores centros de pesquisa na América Latina",
+        timeline_2022_desc: "Fomos reconhecidos como um dos 10 melhores centros de pesquisa na América Latina por nossas contribuições ao desenvolvimento tecnológico regional.",
+        timeline_2023_title: "Prêmio Nacional de Inovação",
+        timeline_2023_subtitle: "Pelo desenvolvimento do Sistema de Monitoramento Cardíaco com IA preditiva",
+        timeline_2023_desc: "Recebemos o prestigioso Prêmio Nacional de Inovação por nosso revolucionário sistema de monitoramento cardíaco que utiliza inteligência artificial preditiva.",
+        timeline_2025_title: "DocIA - Reconhecimento Internacional",
+        timeline_2025_subtitle: "Empreendedores de Alto Impacto no Incuba Unión Tecnológico e VCILAT 2025",
+        timeline_2025_desc: "Nossos estudantes desenvolveram DocIA, uma plataforma de atenção médica primária com IA que foi reconhecida como empreendimento de alto impacto, obtendo prêmios econômicos, bolsas de pós-graduação e visibilidade internacional.",
+
+        // Publications
         publications_titulo_a: "Nossas ",
         publications_titulo_b: "Publicações",
         publications_sub: "Conheça nossas publicações científicas e artigos de pesquisa mais destacados",
-        pub_ieee_titulo: "Artigo de Pesquisa IEEE",
+        filter_articles: "Artigos",
+        filter_profiles: "Perfis",
+        
+        // Publication details
+        pub_ieee_title: "Artigo de Pesquisa IEEE 2025",
+        pub_springer_title: "Capítulo de Livro - Springer",
+        pub_researchgate_title: "Design and Development of a Podiatric Station Prototype",
         pub_ieee_type: "IEEE Xplore",
+        pub_springer_type: "Capítulo de Livro",
+        pub_researchgate_type: "Artigo de Pesquisa",
         pub_fuente: "Fonte:",
         pub_ieee_fuente: "Biblioteca Digital IEEE Xplore",
+        pub_springer_fuente: "Springer",
+        pub_researchgate_fuente: "ResearchGate",
         pub_año: "Ano:",
         pub_doi: "DOI:",
-        pub_ieee_desc: "Acesse este artigo científico disponível na biblioteca digital IEEE Xplore.",
+        pub_tema: "Tema:",
+        pub_autores: "Autores:",
+        pub_springer_autores: "Marco Fabian Borda Wiegert, Mauricio Marcelo Peredo Claros, Eynar Calle Viles, Rommer Alex Ortega Martinez",
+        pub_researchgate_tema: "Diagnóstico de Pé Diabético",
+        pub_ieee_desc: "Pesquisa avançada em tecnologias emergentes para sistemas inteligentes e análise de dados.",
+        pub_springer_desc: "Contribuição científica na área de modelagem e análise aplicada a sistemas complexos.",
+        pub_researchgate_desc: "Desenvolvimento de protótipo para estação podológica aplicada ao diagnóstico do pé diabético.",
         pub_ver: "Ver Publicação",
+        
+        // Researcher Profiles
+        profile_ieee_title: "Perfil de Autor IEEE",
+        profile_ieee_desc: "Perfil de autor no IEEE Xplore com múltiplas publicações em tecnologias emergentes.",
+        profile_ieee_stat: "Publicações IEEE",
+        profile_ieee_link: "Ver Perfil IEEE",
+        profile_orcid_title: "Pesquisador ORCID",
+        profile_orcid_desc: "Perfil ORCID com pesquisas em engenharia biomédica e sistemas inteligentes.",
+        profile_orcid_stat: "ORCID: 0000-0003-1477-2813",
+        profile_orcid_link: "Ver Perfil ORCID",
+        profile_researchgate_title: "ResearchGate",
+        profile_researchgate_desc: "Pesquisador especializado em desenvolvimento de tecnologias médicas e análise de dados biomédicos.",
+        profile_researchgate_stat: "ResearchGate",
+        profile_researchgate_link: "Ver Perfil ResearchGate",
 
         contact_titulo_a: "Pronto para ",
         contact_titulo_b: "colaborar",
@@ -959,11 +1403,14 @@ const I18N = {
         contact_direccion: "Campus Univalle, Av. Argentina #2083, Cochabamba, Bolívia",
         contact_nombre_label: "Nome completo",
         contact_email_label: "E-mail",
-        contact_empresa_label: "Empresa",
+        contact_empresa_type_label: "Você tem uma empresa?",
+        contact_empresa_si: "Sim, tenho uma empresa",
+        contact_empresa_no: "Não, sou cliente individual",
+        contact_empresa_label: "Nome da empresa",
         contact_mensaje_label: "Mensagem",
         contact_nombre_placeholder: "Seu nome",
         contact_email_placeholder: "seu@email.com",
-        contact_empresa_placeholder: "Sua empresa",
+        contact_empresa_placeholder: "Nome da sua empresa",
         contact_mensaje_placeholder: "Conte-nos sobre seu projeto...",
         contact_enviar: "Enviar mensagem",
 
@@ -976,8 +1423,10 @@ const I18N = {
         footer_control_remoto: "Controle Remoto",
         footer_servicios: "Serviços",
         footer_industria: "Indústria 4.0",
+        footer_agroindustria: "Agroindústria",
         footer_medio_ambiente: "Meio Ambiente",
         footer_blockchain: "Blockchain",
+        footer_biomedicas: "Soluções Biomédicas",
         footer_ia: "Inteligência Artificial",
         footer_enlaces_rapidos: "Links Rápidos",
         footer_inicio: "Início",
@@ -1023,4 +1472,345 @@ function initI18n() {
     const KEY = "lang";
     const saved = localStorage.getItem(KEY) || "es";
     applyLanguage(saved);
+}
+
+// Footer service navigation functionality
+function initFooterServiceNavigation() {
+    const footerServiceLinks = document.querySelectorAll('.footer-section a[data-service]');
+    
+    footerServiceLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetService = this.getAttribute('data-service');
+            
+            // Navigate to services section
+            const servicesSection = document.getElementById('servicios');
+            if (servicesSection) {
+                // Smooth scroll to services section
+                servicesSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Wait for scroll to complete, then activate the service
+                setTimeout(() => {
+                    activateServiceCard(targetService);
+                }, 800);
+            }
+        });
+    });
+}
+
+// Function to activate a specific service card
+function activateServiceCard(serviceId) {
+    // Find the radio input for the target service
+    const targetRadio = document.getElementById(serviceId);
+    if (targetRadio) {
+        // Uncheck all other service radios
+        const allServiceRadios = document.querySelectorAll('.service-radio-input');
+        allServiceRadios.forEach(radio => {
+            radio.checked = false;
+        });
+        
+        // Check the target service radio
+        targetRadio.checked = true;
+        
+        // Trigger any change events if needed
+        const changeEvent = new Event('change', { bubbles: true });
+        targetRadio.dispatchEvent(changeEvent);
+    }
+}
+
+// Logo animation functionality
+function initLogoAnimation() {
+    const logo = document.getElementById('logo');
+    const heroSection = document.getElementById('inicio');
+    
+    if (!logo || !heroSection) return;
+    
+    let isLogoVisible = false;
+    
+    function checkLogoVisibility() {
+        const heroRect = heroSection.getBoundingClientRect();
+        const heroHeight = heroRect.height;
+        const scrollProgress = Math.abs(heroRect.top) / heroHeight;
+        
+        // Show logo when scrolled past 60% of hero section
+        const shouldShowLogo = scrollProgress > 0.6 || heroRect.bottom < 0;
+        
+        if (shouldShowLogo && !isLogoVisible) {
+            logo.classList.remove('is-hidden');
+            logo.classList.add('is-visible');
+            isLogoVisible = true;
+        } else if (!shouldShowLogo && isLogoVisible) {
+            logo.classList.remove('is-visible');
+            logo.classList.add('is-hidden');
+            isLogoVisible = false;
+        }
+    }
+    
+    // Check on scroll
+    let ticking = false;
+    function handleScroll() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                checkLogoVisibility();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+    
+    // Initial check
+    checkLogoVisibility();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+}
+
+// Carousel functionality
+function initCarousel() {
+    const carousel = document.querySelector('.carousel');
+    if (!carousel) return;
+    
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    const prevBtn = carousel.querySelector('.prev');
+    const nextBtn = carousel.querySelector('.next');
+    
+    let currentSlide = 0;
+    let isTransitioning = false;
+    
+    // Auto-play settings
+    let autoPlayInterval;
+    const autoPlayDelay = 5000; // 5 seconds
+    
+    function showSlide(index) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        
+        // Hide all slides
+        slides.forEach(slide => slide.classList.remove('active'));
+        
+        // Show target slide
+        slides[index].classList.add('active');
+        
+        currentSlide = index;
+        
+        // Reset transition flag after animation
+        setTimeout(() => {
+            isTransitioning = false;
+        }, 300);
+    }
+    
+    function nextSlide() {
+        const next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+    }
+    
+    function prevSlide() {
+        const prev = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prev);
+    }
+    
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+    }
+    
+    function stopAutoPlay() {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
+    }
+    
+    // Event listeners
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopAutoPlay();
+            setTimeout(startAutoPlay, 2000); // Restart auto-play after 2 seconds
+        });
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopAutoPlay();
+            setTimeout(startAutoPlay, 2000); // Restart auto-play after 2 seconds
+        });
+    }
+    
+    // Pause auto-play on hover
+    carousel.addEventListener('mouseenter', stopAutoPlay);
+    carousel.addEventListener('mouseleave', startAutoPlay);
+    
+    // Touch/swipe support for mobile
+    let startX = 0;
+    let endX = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        stopAutoPlay();
+    }, { passive: true });
+    
+    carousel.addEventListener('touchmove', (e) => {
+        endX = e.touches[0].clientX;
+    }, { passive: true });
+    
+    carousel.addEventListener('touchend', () => {
+        const difference = startX - endX;
+        const threshold = 50; // Minimum swipe distance
+        
+        if (Math.abs(difference) > threshold) {
+            if (difference > 0) {
+                nextSlide(); // Swipe left - next slide
+            } else {
+                prevSlide(); // Swipe right - previous slide
+            }
+        }
+        
+        setTimeout(startAutoPlay, 2000); // Restart auto-play
+    }, { passive: true });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!carousel.matches(':hover')) return; // Only when carousel is focused/hovered
+        
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+            stopAutoPlay();
+            setTimeout(startAutoPlay, 2000);
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+            stopAutoPlay();
+            setTimeout(startAutoPlay, 2000);
+        }
+    });
+    
+    // Start auto-play
+    startAutoPlay();
+    
+    // Pause auto-play when tab is not visible
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAutoPlay();
+        } else {
+            startAutoPlay();
+        }
+    });
+}
+
+// Timeline functionality
+function initTimeline() {
+    const timeline = document.querySelector('.cd-horizontal-timeline');
+    if (!timeline) return;
+
+    const timelineEvents = timeline.querySelector('.events');
+    const timelineContent = timeline.querySelector('.events-content');
+    const eventsContent = timelineContent.querySelectorAll('li');
+    const fillingLine = timeline.querySelector('.filling-line');
+    
+    let currentTimelineItem = 0;
+    const timelineItems = timeline.querySelectorAll('.events a');
+    
+    // Initialize timeline
+    function initTimelineEvents() {
+        // Set initial filling line width
+        updateFilling();
+        
+        // Bind click events to timeline items
+        timelineItems.forEach((item, index) => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+                if (index !== currentTimelineItem) {
+                    selectTimelineItem(index);
+                }
+            });
+        });
+    }
+
+    function selectTimelineItem(index) {
+        if (index < 0 || index >= timelineItems.length) return;
+        
+        // Remove selected class from all items
+        timelineItems.forEach(item => item.classList.remove('selected'));
+        eventsContent.forEach(content => content.classList.remove('selected'));
+        
+        // Add selected class to target items
+        timelineItems[index].classList.add('selected');
+        eventsContent[index].classList.add('selected');
+        
+        currentTimelineItem = index;
+        
+        // Update filling line
+        updateFilling();
+    }
+
+    function updateFilling() {
+        const selectedItem = timelineItems[currentTimelineItem];
+        const timelineWidth = timelineEvents.offsetWidth;
+        const itemLeft = selectedItem.parentElement.offsetLeft;
+        const itemWidth = selectedItem.parentElement.offsetWidth;
+        const left = itemLeft + itemWidth / 2;
+        const scaleValue = left / timelineWidth;
+        
+        fillingLine.style.transform = `scaleX(${scaleValue})`;
+        fillingLine.style.transformOrigin = 'left center';
+    }
+
+    // Keyboard navigation (still using arrow keys for accessibility)
+    document.addEventListener('keydown', function(event) {
+        if (!timeline.matches(':hover')) return;
+        
+        if (event.key === 'ArrowLeft' && currentTimelineItem > 0) {
+            selectTimelineItem(currentTimelineItem - 1);
+        } else if (event.key === 'ArrowRight' && currentTimelineItem < timelineItems.length - 1) {
+            selectTimelineItem(currentTimelineItem + 1);
+        }
+    });
+
+    // Auto-play timeline
+    let autoPlayInterval;
+    const autoPlayDelay = 8000; // 8 seconds
+
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(() => {
+            const nextIndex = (currentTimelineItem + 1) % timelineItems.length;
+            selectTimelineItem(nextIndex);
+        }, autoPlayDelay);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
+    }
+
+    // Pause auto-play on hover
+    timeline.addEventListener('mouseenter', stopAutoPlay);
+    timeline.addEventListener('mouseleave', startAutoPlay);
+
+    // Initialize everything
+    initTimelineEvents();
+    
+    // Start auto-play after a delay
+    setTimeout(startAutoPlay, 3000);
+
+    // Pause auto-play when tab is not visible
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopAutoPlay();
+        } else {
+            setTimeout(startAutoPlay, 1000);
+        }
+    });
+
+    // Responsive handling
+    function handleResize() {
+        updateFilling();
+    }
+
+    window.addEventListener('resize', handleResize);
 }

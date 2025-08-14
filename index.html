@@ -31,7 +31,12 @@
       <nav class="nav-container">
         <!-- Logo Section -->
         <div class="nav-left">
-          <!-- Logo moved to hero section -->
+          <img
+            id="logo"
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo_uma-S2843pPd763lL74CEqxHmUSy4IibEP.png"
+            alt="UMA Logo"
+            class="logo is-hidden"
+          />
         </div>
         
         <!-- Navigation Menu (Centered) -->
@@ -39,6 +44,7 @@
           <li><a href="#inicio" data-i18n="nav_inicio">Inicio</a></li>
           <li><a href="#nosotros" data-i18n="nav_nosotros">Nosotros</a></li>
           <li><a href="#servicios" data-i18n="nav_servicios">Servicios</a></li>
+          <li><a href="#trayectoria" data-i18n="nav_trayectoria">Trayectoria</a></li>
           <li><a href="#proyectos" data-i18n="nav_proyectos">Proyectos</a></li>
           <li><a href="#publicaciones" data-i18n="nav_publicaciones">Publicaciones</a></li>
           <li><a href="#contacto" data-i18n="nav_contacto">Contacto</a></li>
@@ -184,10 +190,40 @@
             </a>
           </div>
           <div class="about-visual">
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imagen%20%284%29-XefgEbmt4LE1AcNjkxXbPfgI6r0uLG.png"
-              alt="Sobre UMA"
-            />
+            <h3 class="development-fields-title" data-i18n="dev_fields_title">Nuestros Campos de Desarrollo</h3>
+            <div class="carousel">
+              <div class="carousel-slide active">
+                <img src="assets/Agroindustria.jpg" alt="Soluciones para la Agroindustria">
+                <div class="carousel-caption">
+                  <h4 data-i18n="carousel_agro">Soluciones para la Agroindustria</h4>
+                </div>
+              </div>
+
+              <div class="carousel-slide">
+                <img src="assets/IoT2.png" alt="Soluciones e Implementaciones IoT">
+                <div class="carousel-caption">
+                  <h4 data-i18n="carousel_iot">Soluciones e Implementaciones IoT</h4>
+                </div>
+              </div>
+
+              <div class="carousel-slide">
+                <img src="assets/Monitoreo.jpg" alt="Control y Monitorio Remoto">
+                <div class="carousel-caption">
+                  <h4 data-i18n="carousel_control">Control y Monitorio Remoto</h4>
+                </div>
+              </div>
+
+              <div class="carousel-slide">
+                <img src="assets/SolucionesMedicas.jpg" alt="Soluciones Médicas">
+                <div class="carousel-caption">
+                  <h4 data-i18n="carousel_medical">Soluciones Médicas</h4>
+                </div>
+              </div>
+
+              <!-- Navigation arrows -->
+              <button class="carousel-btn prev" aria-label="Anterior">&#10094;</button>
+              <button class="carousel-btn next" aria-label="Siguiente">&#10095;</button>
+            </div>
           </div>
         </div>
       </div>
@@ -374,6 +410,115 @@
       </div>
     </section>
 
+    <!-- Timeline Section -->
+    <section id="trayectoria" class="timeline-section">
+      <div class="timeline-container">
+        <div class="section-header">
+          <h2><span data-i18n="timeline_titulo_a">Nuestra</span> <span class="highlight" data-i18n="timeline_titulo_b">Trayectoria</span></h2>
+          <p data-i18n="timeline_sub">
+            Un recorrido por nuestros principales logros e hitos institucionales
+          </p>
+        </div>
+
+        <div class="cd-horizontal-timeline">
+          <div class="timeline">
+            <div class="events-wrapper">
+              <div class="events">
+                <ol>
+                  <li><a href="#0" data-date="16/01/2020" class="selected">2020</a></li>
+                  <li><a href="#0" data-date="16/01/2021">2021</a></li>
+                  <li><a href="#0" data-date="16/01/2022">2022</a></li>
+                  <li><a href="#0" data-date="16/01/2023">2023</a></li>
+                  <li><a href="#0" data-date="18/07/2025">2025</a></li>
+                </ol>
+                <span class="filling-line" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="events-content">
+            <ol>
+              <li class="selected" data-date="16/01/2020">
+                <div class="timeline-content">
+                  <div class="timeline-year">2020</div>
+                  <h3 data-i18n="timeline_2020_title">Alianza Estratégica</h3>
+                  <h4 data-i18n="timeline_2020_subtitle">Colaboración con el Instituto Tecnológico de Massachusetts (MIT)</h4>
+                  <p data-i18n="timeline_2020_desc">
+                    Establecimos una alianza estratégica con MIT para el intercambio de conocimientos 
+                    y desarrollo conjunto de proyectos de investigación en tecnologías emergentes.
+                  </p>
+                  <div class="timeline-icon">
+                    <i class="fas fa-handshake"></i>
+                  </div>
+                </div>
+              </li>
+
+              <li data-date="16/01/2021">
+                <div class="timeline-content">
+                  <div class="timeline-year">2021</div>
+                  <h3 data-i18n="timeline_2021_title">Patente Internacional</h3>
+                  <h4 data-i18n="timeline_2021_subtitle">Por el desarrollo de prótesis biónicas con sensores táctiles avanzados</h4>
+                  <p data-i18n="timeline_2021_desc">
+                    Obtuvimos reconocimiento internacional por nuestro innovador desarrollo en 
+                    prótesis biónicas que incorporan sensores táctiles de última generación.
+                  </p>
+                  <div class="timeline-icon">
+                    <i class="fas fa-certificate"></i>
+                  </div>
+                </div>
+              </li>
+
+              <li data-date="16/01/2022">
+                <div class="timeline-content">
+                  <div class="timeline-year">2022</div>
+                  <h3 data-i18n="timeline_2022_title">Reconocimiento Internacional</h3>
+                  <h4 data-i18n="timeline_2022_subtitle">Seleccionados entre los 10 mejores centros de investigación en Latinoamérica</h4>
+                  <p data-i18n="timeline_2022_desc">
+                    Fuimos reconocidos como uno de los 10 mejores centros de investigación en 
+                    Latinoamérica por nuestras contribuciones al desarrollo tecnológico regional.
+                  </p>
+                  <div class="timeline-icon">
+                    <i class="fas fa-trophy"></i>
+                  </div>
+                </div>
+              </li>
+
+              <li data-date="16/01/2023">
+                <div class="timeline-content">
+                  <div class="timeline-year">2023</div>
+                  <h3 data-i18n="timeline_2023_title">Premio Nacional de Innovación</h3>
+                  <h4 data-i18n="timeline_2023_subtitle">Por el desarrollo del Sistema de Monitoreo Cardíaco con IA predictiva</h4>
+                  <p data-i18n="timeline_2023_desc">
+                    Recibimos el prestigioso Premio Nacional de Innovación por nuestro 
+                    revolucionario sistema de monitoreo cardíaco que utiliza inteligencia artificial predictiva.
+                  </p>
+                  <div class="timeline-icon">
+                    <i class="fas fa-award"></i>
+                  </div>
+                </div>
+              </li>
+
+              <li data-date="18/07/2025">
+                <div class="timeline-content">
+                  <div class="timeline-year">2025</div>
+                  <h3 data-i18n="timeline_2025_title">DocIA - Reconocimiento Internacional</h3>
+                  <h4 data-i18n="timeline_2025_subtitle">Emprendedores de Alto Impacto en Incuba Unión Tecnológico y VCILAT 2025</h4>
+                  <p data-i18n="timeline_2025_desc">
+                    Nuestros estudiantes desarrollaron DocIA, una plataforma de atención médica primaria con IA 
+                    que fue reconocida como emprendimiento de alto impacto, obteniendo premios económicos, 
+                    becas de posgrado y visibilidad internacional.
+                  </p>
+                  <div class="timeline-icon">
+                    <i class="fas fa-user-md"></i>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Projects Section -->
     <section id="proyectos" class="projects">
       <div class="projects-container">
@@ -404,8 +549,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>Proyecto UMA - Desarrollo Tecnológico</h3>
-                      <p>
+                      <h3 data-i18n="project_video1_title">Proyecto UMA - Desarrollo Tecnológico</h3>
+                      <p data-i18n="project_video1_desc">
                         Descubre nuestros avances en investigación y desarrollo
                         de tecnologías innovadoras para transformar el futuro.
                       </p>
@@ -429,8 +574,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>Innovación UMA - Soluciones Inteligentes</h3>
-                      <p>
+                      <h3 data-i18n="project_video2_title">Innovación UMA - Soluciones Inteligentes</h3>
+                      <p data-i18n="project_video2_desc">
                         Conoce nuestras soluciones tecnológicas avanzadas que
                         están revolucionando múltiples industrias.
                       </p>
@@ -454,8 +599,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Investigación y Desarrollo</h3>
-                      <p>
+                      <h3 data-i18n="project_video3_title">UMA - Investigación y Desarrollo</h3>
+                      <p data-i18n="project_video3_desc">
                         Explora nuestros proyectos de investigación que están
                         definiendo el futuro de la tecnología.
                       </p>
@@ -479,8 +624,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Tecnología IoT Avanzada</h3>
-                      <p>
+                      <h3 data-i18n="project_video4_title">UMA - Tecnología IoT Avanzada</h3>
+                      <p data-i18n="project_video4_desc">
                         Descubre nuestras soluciones IoT que están revolucionando el monitoreo ambiental y industrial.
                       </p>
                     </div>
@@ -503,8 +648,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Sistemas Inteligentes</h3>
-                      <p>
+                      <h3 data-i18n="project_video5_title">UMA - Sistemas Inteligentes</h3>
+                      <p data-i18n="project_video5_desc">
                         Implementación de sistemas inteligentes para automatización y control industrial avanzado.
                       </p>
                     </div>
@@ -527,8 +672,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Monitoreo Ambiental</h3>
-                      <p>
+                      <h3 data-i18n="project_video6_title">UMA - Monitoreo Ambiental</h3>
+                      <p data-i18n="project_video6_desc">
                         Soluciones avanzadas para el monitoreo ambiental y gestión sostenible de recursos.
                       </p>
                     </div>
@@ -551,8 +696,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Innovación Biomédica</h3>
-                      <p>
+                      <h3 data-i18n="project_video7_title">UMA - Innovación Biomédica</h3>
+                      <p data-i18n="project_video7_desc">
                         Desarrollo de tecnologías biomédicas innovadoras para mejorar la calidad de vida.
                       </p>
                     </div>
@@ -575,8 +720,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Redes de Sensores</h3>
-                      <p>
+                      <h3 data-i18n="project_video8_title">UMA - Redes de Sensores</h3>
+                      <p data-i18n="project_video8_desc">
                         Implementación de redes de sensores distribuidos para aplicaciones industriales y ambientales.
                       </p>
                     </div>
@@ -599,8 +744,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Automatización Industrial</h3>
-                      <p>
+                      <h3 data-i18n="project_video9_title">UMA - Automatización Industrial</h3>
+                      <p data-i18n="project_video9_desc">
                         Soluciones de automatización para optimizar procesos industriales con tecnología de vanguardia.
                       </p>
                     </div>
@@ -623,8 +768,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Análisis de Datos</h3>
-                      <p>
+                      <h3 data-i18n="project_video10_title">UMA - Análisis de Datos</h3>
+                      <p data-i18n="project_video10_desc">
                         Análisis avanzado de datos para optimización de procesos y toma de decisiones inteligentes.
                       </p>
                     </div>
@@ -647,8 +792,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Energías Renovables</h3>
-                      <p>
+                      <h3 data-i18n="project_video11_title">UMA - Energías Renovables</h3>
+                      <p data-i18n="project_video11_desc">
                         Investigación en energías renovables y sistemas de gestión energética sostenible.
                       </p>
                     </div>
@@ -671,8 +816,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Blockchain Aplicado</h3>
-                      <p>
+                      <h3 data-i18n="project_video12_title">UMA - Blockchain Aplicado</h3>
+                      <p data-i18n="project_video12_desc">
                         Implementación de tecnología blockchain para trazabilidad y seguridad en cadenas de suministro.
                       </p>
                     </div>
@@ -695,8 +840,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Inteligencia Artificial</h3>
-                      <p>
+                      <h3 data-i18n="project_video13_title">UMA - Inteligencia Artificial</h3>
+                      <p data-i18n="project_video13_desc">
                         Desarrollo de algoritmos de IA para procesamiento de datos y automatización inteligente.
                       </p>
                     </div>
@@ -719,8 +864,8 @@
                       </iframe>
                     </div>
                     <div class="video-info">
-                      <h3>UMA - Futuro Tecnológico</h3>
-                      <p>
+                      <h3 data-i18n="project_video14_title">UMA - Futuro Tecnológico</h3>
+                      <p data-i18n="project_video14_desc">
                         Visión del futuro tecnológico y las innovaciones que están transformando el mundo.
                       </p>
                     </div>
@@ -756,7 +901,7 @@
               
               <!-- Video Counter -->
               <div class="video-counter">
-                <span id="current-video">1</span> de <span id="total-videos">14</span>
+                <span id="current-video">1</span> <span data-i18n="project_video_counter">de</span> <span id="total-videos">14</span>
               </div>
             </div>
           </div>
@@ -764,7 +909,7 @@
       </div>
     </section>
 
-    <!-- Publications Section -->
+    <!-- Publications Section / Sección de Publicaciones / Seção de Publicações -->
     <section id="publicaciones" class="publications">
       <div class="publications-container">
         <div class="section-header">
@@ -774,27 +919,153 @@
           </p>
         </div>
 
-        <div class="publications-grid">
-            <div class="publication-card">
-              <div class="publication-header">
-                <h3 data-i18n="pub_ieee_titulo">IEEE Research Article</h3>
-                <span class="publication-type" data-i18n="pub_ieee_type">IEEE Xplore</span>
+        <!-- Filter Tabs / Pestañas de Filtro / Abas de Filtro -->
+        <div class="publications-filter">
+          <button class="filter-btn active" data-filter="articles">
+            <span class="filter-icon">📄</span>
+            <span data-i18n="filter_articles">Artículos</span>
+          </button>
+          <button class="filter-btn" data-filter="profiles">
+            <span class="filter-icon">👨‍🔬</span>
+            <span data-i18n="filter_profiles">Perfiles</span>
+          </button>
+        </div>
+
+        <!-- Articles Content / Contenido de Artículos / Conteúdo de Artigos -->
+        <div class="filter-content active" id="articles-content">
+          <!-- Latest Publications Grid / Cuadrícula de Últimas Publicaciones / Grade de Publicações Recentes -->
+          <div class="publications-grid-simple">
+          <!-- Article 1: IEEE 2025 / Artículo 1: IEEE 2025 / Artigo 1: IEEE 2025 -->
+          <div class="publication-card">
+            <div class="publication-header">
+              <h3 data-i18n="pub_ieee_title">IEEE Research Article 2025</h3>
+              <span class="publication-type" data-i18n="pub_ieee_type">IEEE Xplore</span>
+            </div>
+            <div class="publication-meta">
+              <p><strong data-i18n="pub_fuente">Fuente:</strong> <span data-i18n="pub_ieee_fuente">IEEE Xplore Digital Library</span></p>
+              <p><strong data-i18n="pub_año">Año:</strong> 2025</p>
+              <p><strong data-i18n="pub_doi">DOI:</strong> 10.1109/document.10876331</p>
+            </div>
+            <div class="publication-abstract">
+              <p data-i18n="pub_ieee_desc">Investigación avanzada en tecnologías emergentes para sistemas inteligentes y análisis de datos.</p>
+            </div>
+            <a href="https://ieeexplore.ieee.org/document/10876331" target="_blank" class="publication-link" data-i18n="pub_ver">Ver Publicación</a>
+          </div>
+
+          <!-- Article 2: Book Chapter 2025 / Artículo 2: Capítulo de Libro 2025 / Artigo 2: Capítulo de Livro 2025 -->
+          <div class="publication-card">
+            <div class="publication-header">
+              <h3 data-i18n="pub_springer_title">Capítulo de Libro - Springer</h3>
+              <span class="publication-type" data-i18n="pub_springer_type">Book Chapter</span>
+            </div>
+            <div class="publication-meta">
+              <p><strong data-i18n="pub_fuente">Fuente:</strong> <span data-i18n="pub_springer_fuente">Springer</span></p>
+              <p><strong data-i18n="pub_año">Año:</strong> 2025</p>
+              <p><strong data-i18n="pub_doi">DOI:</strong> 10.1007/978-3-031-89514-2_12</p>
+              <p><strong data-i18n="pub_autores">Autores:</strong> <span data-i18n="pub_springer_autores">Marco Fabian Borda Wiegert, Mauricio Marcelo Peredo Claros, Eynar Calle Viles, Rommer Alex Ortega Martinez</span></p>
+            </div>
+            <div class="publication-abstract">
+              <p data-i18n="pub_springer_desc">Contribución científica en el área de modelado y análisis aplicado a sistemas complejos.</p>
+            </div>
+            <a href="https://doi.org/10.1007/978-3-031-89514-2_12" target="_blank" class="publication-link" data-i18n="pub_ver">Ver Publicación</a>
+          </div>
+
+          <!-- Article 3: ResearchGate / Artículo 3: ResearchGate / Artigo 3: ResearchGate -->
+          <div class="publication-card">
+            <div class="publication-header">
+              <h3 data-i18n="pub_researchgate_title">Design and Development of a Podiatric Station Prototype</h3>
+              <span class="publication-type" data-i18n="pub_researchgate_type">Research Paper</span>
+            </div>
+            <div class="publication-meta">
+              <p><strong data-i18n="pub_fuente">Fuente:</strong> <span data-i18n="pub_researchgate_fuente">ResearchGate</span></p>
+              <p><strong data-i18n="pub_año">Año:</strong> 2024</p>
+              <p><strong data-i18n="pub_tema">Tema:</strong> <span data-i18n="pub_researchgate_tema">Diagnosis of Diabetic Foot</span></p>
+            </div>
+            <div class="publication-abstract">
+              <p data-i18n="pub_researchgate_desc">Desarrollo de prototipo para estación podológica aplicada al diagnóstico del pie diabético.</p>
+            </div>
+            <a href="https://www.researchgate.net/publication/392875635_Design_and_Development_of_a_Podiatric_Station_Prototype_for_the_Diagnosis_of_Diabetic_Foot" target="_blank" class="publication-link" data-i18n="pub_ver">Ver Publicación</a>
+          </div>
+        </div>
+        </div>
+
+        <!-- Profiles Content / Contenido de Perfiles / Conteúdo de Perfis -->
+        <div class="filter-content" id="profiles-content">
+        <!-- Researcher Profiles Section / Sección de Perfiles de Investigadores / Seção de Perfis de Pesquisadores -->
+        <div class="researchers-section">
+          <div class="researchers-grid">
+            <!-- IEEE Author Profile / Perfil de Autor IEEE / Perfil de Autor IEEE -->
+            <div class="researcher-card">
+              <div class="researcher-info">
+                <div class="researcher-avatar">
+                  <i class="fas fa-user-graduate"></i>
+                </div>
+                <h4 data-i18n="profile_ieee_title">IEEE Author Profile</h4>
+                <p data-i18n="profile_ieee_desc">Perfil de autor en IEEE Xplore con múltiples publicaciones en tecnologías emergentes.</p>
+                <div class="researcher-stats">
+                  <span class="stat-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span data-i18n="profile_ieee_stat">Publicaciones IEEE</span>
+                  </span>
+                </div>
               </div>
-              <div class="publication-meta">
-                <p>
-                  <strong data-i18n="pub_fuente">Fuente:</strong> <span data-i18n="pub_ieee_fuente">IEEE Xplore Digital Library</span>
-                </p>
-                <p><strong data-i18n="pub_año">Año:</strong> 2024</p>
-                <p><strong data-i18n="pub_doi">DOI:</strong> 10.1109/document.10876331</p>
+              <a href="https://ieeexplore.ieee.org/author/233620355455662" target="_blank" class="researcher-link">
+                <i class="fas fa-external-link-alt"></i>
+                <span data-i18n="profile_ieee_link">Ver Perfil IEEE</span>
+              </a>
+            </div>
+
+            <!-- ORCID Profile / Perfil ORCID / Perfil ORCID -->
+            <div class="researcher-card">
+              <div class="researcher-info">
+                <div class="researcher-avatar">
+                  <i class="fab fa-orcid"></i>
+                </div>
+                <h4 data-i18n="profile_orcid_title">ORCID Researcher</h4>
+                <p data-i18n="profile_orcid_desc">Perfil ORCID con investigaciones en ingeniería biomédica y sistemas inteligentes.</p>
+                <div class="researcher-stats">
+                  <span class="stat-item">
+                    <i class="fas fa-id-badge"></i>
+                    <span data-i18n="profile_orcid_stat">ORCID: 0000-0003-1477-2813</span>
+                  </span>
+                </div>
               </div>
-              <div class="publication-abstract">
-                <p data-i18n="pub_ieee_desc">
-                  Accede a este artículo científico de investigación disponible en la biblioteca digital IEEE Xplore.
-                </p>
+              <a href="https://orcid.org/0000-0003-1477-2813" target="_blank" class="researcher-link">
+                <i class="fas fa-external-link-alt"></i>
+                <span data-i18n="profile_orcid_link">Ver Perfil ORCID</span>
+              </a>
+            </div>
+
+            <!-- ResearchGate Profile / Perfil ResearchGate / Perfil ResearchGate -->
+            <div class="researcher-card">
+              <div class="researcher-info">
+                <div class="researcher-avatar">
+                  <i class="fab fa-researchgate"></i>
+                </div>
+                <h4 data-i18n="profile_researchgate_title">ResearchGate</h4>
+                <p data-i18n="profile_researchgate_desc">Investigador especializado en desarrollo de tecnologías médicas y análisis de datos biomédicos.</p>
+                <div class="researcher-stats">
+                  <span class="stat-item">
+                    <i class="fas fa-microscope"></i>
+                    <span data-i18n="profile_researchgate_stat">ResearchGate</span>
+                  </span>
+                </div>
               </div>
-              <a href="https://ieeexplore.ieee.org/document/10876331/references#references" target="_blank" class="publication-link" data-i18n="pub_ver">Ver Publicación</a>
+              <a href="https://www.researchgate.net/profile/Eynar-Calle" target="_blank" class="researcher-link">
+                <i class="fas fa-external-link-alt"></i>
+                <span data-i18n="profile_researchgate_link">Ver Perfil ResearchGate</span>
+              </a>
+            </div>
+                  </span>
+                </div>
+              </div>
+              <!-- <a href="https://www.researchgate.net/profile/Eynar-Calle" target="_blank" class="researcher-link">
+                <i class="fas fa-external-link-alt"></i>
+                Ver Perfil ResearchGate
+              </a> -->
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -828,13 +1099,22 @@
           </ul>
         </div>
         <div class="contact-form">
-          <form>
+          <form 
+            action="https://formsubmit.co/meridajohan065@gmail.com" 
+            method="POST" 
+            onsubmit="this.submit(); return true;">
+            
+            <!-- FormSubmit Configuration -->
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="http://localhost:8000/index.html">
+            <input type="hidden" name="_subject" value="Nuevo mensaje desde UMA Landing Page">
+            
             <div class="form-group">
               <label for="name" data-i18n="contact_nombre_label">Nombre completo</label>
               <input
                 type="text"
                 id="name"
-                name="name"
+                name="nombre"
                 placeholder="Tu nombre"
                 data-i18n-placeholder="contact_nombre_placeholder"
                 required
@@ -845,19 +1125,34 @@
               <input
                 type="email"
                 id="email"
-                name="email"
+                name="correo"
                 placeholder="tu@email.com"
                 data-i18n-placeholder="contact_email_placeholder"
                 required
               />
             </div>
             <div class="form-group">
-              <label for="company" data-i18n="contact_empresa_label">Empresa</label>
+              <label data-i18n="contact_empresa_type_label">¿Tienes una empresa?</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="tiene_empresa" value="si" id="empresa_si" onchange="toggleCompanyField()">
+                  <span class="radio-custom"></span>
+                  <span data-i18n="contact_empresa_si">Sí, tengo empresa</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="tiene_empresa" value="no" id="empresa_no" onchange="toggleCompanyField()" checked>
+                  <span class="radio-custom"></span>
+                  <span data-i18n="contact_empresa_no">No, soy cliente individual</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group" id="company-field" style="display: none;">
+              <label for="company" data-i18n="contact_empresa_label">Nombre de la empresa</label>
               <input
                 type="text"
                 id="company"
-                name="company"
-                placeholder="Tu empresa"
+                name="empresa"
+                placeholder="Nombre de tu empresa"
                 data-i18n-placeholder="contact_empresa_placeholder"
               />
             </div>
@@ -865,7 +1160,7 @@
               <label for="message" data-i18n="contact_mensaje_label">Mensaje</label>
               <textarea
                 id="message"
-                name="message"
+                name="mensaje"
                 placeholder="Cuéntanos sobre tu proyecto..."
                 data-i18n-placeholder="contact_mensaje_placeholder"
                 required
@@ -902,10 +1197,12 @@
         <div class="footer-section">
           <h4 data-i18n="footer_servicios">Servicios</h4>
           <ul>
-            <li><a href="#servicios" data-i18n="footer_industria">Industria 4.0</a></li>
-            <li><a href="#servicios" data-i18n="footer_medio_ambiente">Medio Ambiente</a></li>
-            <li><a href="#servicios" data-i18n="footer_blockchain">Blockchain</a></li>
-            <li><a href="#servicios" data-i18n="footer_ia">Inteligencia Artificial</a></li>
+            <li><a href="#servicios" data-service="industria" data-i18n="footer_industria">Industria 4.0</a></li>
+            <li><a href="#servicios" data-service="agroindustria" data-i18n="footer_agroindustria">Agroindustria</a></li>
+            <li><a href="#servicios" data-service="medioambiente" data-i18n="footer_medio_ambiente">Medio Ambiente</a></li>
+            <li><a href="#servicios" data-service="blockchain" data-i18n="footer_blockchain">Blockchain</a></li>
+            <li><a href="#servicios" data-service="biomedicas" data-i18n="footer_biomedicas">Soluciones Biomédicas</a></li>
+            <li><a href="#servicios" data-service="inteligencia" data-i18n="footer_ia">Inteligencia Artificial</a></li>
           </ul>
         </div>
         <div class="footer-section">
