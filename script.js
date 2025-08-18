@@ -322,13 +322,58 @@ function updateHeaderBackground() {
 // Header background on scroll
 window.addEventListener('scroll', updateHeaderBackground);
 
-// Form submission (if form exists)
-const contactForm = document.querySelector('form');
+// Form submission
+const contactForm = document.getElementById('contact-form');
+const submitButton = contactForm.querySelector('button[type="submit"]');
+const cooldown = 30; // segundos de espera
+
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.');
-    });
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Lanzar confetti
+    let duration = 2 * 1000;
+    let end = Date.now() + duration;
+    (function frame() {
+      confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 } });
+      confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 } });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+
+    // Guardar texto original y cambiar a "¡Enviado!"
+    const originalText = submitButton.innerHTML;
+    // Get current language and apply translation
+    const currentLang = localStorage.getItem('lang') || 'es';
+    const dict = I18N[currentLang] || I18N.es;
+    submitButton.innerHTML = dict.contact_gracias;
+    submitButton.disabled = true;
+
+    // Enviar formulario
+    fetch(contactForm.action, {
+      method: "POST",
+      body: new FormData(contactForm),
+    }).then(response => {
+      if (response.ok) {
+        contactForm.reset();
+
+        // Después de 5 segundos, volver a "Enviar mensaje" y mostrar contador
+        setTimeout(() => {
+          submitButton.innerHTML = originalText + ` (30s)`;
+          let remaining = cooldown;
+          const interval = setInterval(() => {
+            remaining--;
+            submitButton.innerHTML = `${originalText} (${remaining}s)`;
+            if (remaining <= 0) {
+              clearInterval(interval);
+              submitButton.innerHTML = originalText;
+              submitButton.disabled = false;
+            }
+          }, 1000);
+
+        }, 5000); // 5 segundos mostrando "¡Enviado!"
+      }
+    }).catch(error => console.error(error));
+  });
 }
 
 // Toggle company field based on radio button selection
@@ -751,7 +796,7 @@ const I18N = {
         // Stats
         stat_investigadores: "Investigadores",
         stat_proyectos: "Proyectos completados", 
-        stat_anios: "Años de experiencia",
+        stat_publicacion: "Publicaciones",
         stat_premios: "Premios recibidos",
 
         // About
@@ -826,34 +871,34 @@ const I18N = {
         projects_sub: "Descubre nuestros últimos proyectos de investigación y desarrollo tecnológico",
 
         // Project Videos
-        project_video1_title: "Proyecto UMA - Desarrollo Tecnológico",
-        project_video1_desc: "Descubre nuestros avances en investigación y desarrollo de tecnologías innovadoras para transformar el futuro.",
-        project_video2_title: "Innovación UMA - Soluciones Inteligentes",
-        project_video2_desc: "Conoce nuestras soluciones tecnológicas avanzadas que están revolucionando múltiples industrias.",
-        project_video3_title: "UMA - Investigación y Desarrollo",
-        project_video3_desc: "Explora nuestros proyectos de investigación que están definiendo el futuro de la tecnología.",
-        project_video4_title: "UMA - Tecnología IoT Avanzada",
-        project_video4_desc: "Descubre nuestras soluciones IoT que están revolucionando el monitoreo ambiental y industrial.",
-        project_video5_title: "UMA - Sistemas Inteligentes",
-        project_video5_desc: "Implementación de sistemas inteligentes para automatización y control industrial avanzado.",
-        project_video6_title: "UMA - Monitoreo Ambiental",
-        project_video6_desc: "Soluciones avanzadas para el monitoreo ambiental y gestión sostenible de recursos.",
-        project_video7_title: "UMA - Innovación Biomédica",
-        project_video7_desc: "Desarrollo de tecnologías biomédicas innovadoras para mejorar la calidad de vida.",
-        project_video8_title: "UMA - Redes de Sensores",
-        project_video8_desc: "Implementación de redes de sensores distribuidos para aplicaciones industriales y ambientales.",
-        project_video9_title: "UMA - Automatización Industrial",
-        project_video9_desc: "Soluciones de automatización para optimizar procesos industriales con tecnología de vanguardia.",
-        project_video10_title: "UMA - Análisis de Datos",
-        project_video10_desc: "Análisis avanzado de datos para optimización de procesos y toma de decisiones inteligentes.",
-        project_video11_title: "UMA - Energías Renovables",
-        project_video11_desc: "Investigación en energías renovables y sistemas de gestión energética sostenible.",
-        project_video12_title: "UMA - Blockchain Aplicado",
-        project_video12_desc: "Implementación de tecnología blockchain para trazabilidad y seguridad en cadenas de suministro.",
-        project_video13_title: "UMA - Inteligencia Artificial",
-        project_video13_desc: "Desarrollo de algoritmos de IA para procesamiento de datos y automatización inteligente.",
-        project_video14_title: "UMA - Futuro Tecnológico",
-        project_video14_desc: "Visión del futuro tecnológico y las innovaciones que están transformando el mundo.",
+        project_video1_title: "RheumAlly",
+        project_video1_desc: "Aplicación web de rehabilitación para miembros superiores de pacientes con Artritis Reumatoide usando visión artificial.",
+        project_video2_title: "LIFEBEAT",
+        project_video2_desc: "Equipo de RCP portátil y económico con sistema automatizado de compresión torácica y monitoreo de pacientes.",
+        project_video3_title: "Plataforma de sensores IoT para el monitoreo de las variables ambientales",
+        project_video3_desc: "Sistema integral de sensores IoT para monitoreo en tiempo real de variables ambientales críticas.",
+        project_video4_title: "Zumi",
+        project_video4_desc: "Robot de aprendizaje interactivo diseñado para revolucionar la educación infantil y conectividad social.",
+        project_video5_title: "FIRE SAFE",
+        project_video5_desc: "Extintor innovador basado en ondas acústicas de baja frecuencia para líquidos altamente inflamables.",
+        project_video6_title: "Cardiopress",
+        project_video6_desc: "Dispositivo no invasivo con fotopletismografía e IA para medición de presión arterial y glucosa.",
+        project_video7_title: "RANDAL",
+        project_video7_desc: "Robot terapéutico que combina robótica e IA para mejorar la vocalización en niños con dislalia.",
+        project_video8_title: "Ultiplex",
+        project_video8_desc: "Localizador apical avanzado para odontología moderna con mayor precisión en tratamientos de conductos.",
+        project_video9_title: "Roadscan",
+        project_video9_desc: "Sistema tecnológico para monitoreo y detección de imperfecciones en carreteras y mantenimiento vial.",
+        project_video10_title: "DactiloView",
+        project_video10_desc: "Plataforma educativa con animaciones 3D y guantes sensorizados para enseñanza de Lengua de Señas Boliviana.",
+        project_video11_title: "Siku",
+        project_video11_desc: "Proyecto de documentación musical que explora las diferencias entre sistemas tonales occidentales y andinos.",
+        project_video12_title: "Sensores Bobinos",
+        project_video12_desc: "Sistema especializado de sensores para monitoreo y control de procesos industriales avanzados.",
+        project_video13_title: "Lumifit",
+        project_video13_desc: "Sistema innovador de sensores de entrenamiento para optimización de rutinas físicas y rendimiento deportivo.",
+        project_video14_title: "TILAPIAS",
+        project_video14_desc: "Proyecto de investigación para desarrollo sostenible de sistemas acuícolas con tecnología IoT.",
         project_video_counter: "de",
 
         // Development Fields / Carousel
@@ -873,12 +918,15 @@ const I18N = {
         timeline_2021_title: "Patente Internacional",
         timeline_2021_subtitle: "Por el desarrollo de prótesis biónicas con sensores táctiles avanzados",
         timeline_2021_desc: "Obtuvimos reconocimiento internacional por nuestro innovador desarrollo en prótesis biónicas que incorporan sensores táctiles de última generación.",
-        timeline_2022_title: "Reconocimiento Internacional",
-        timeline_2022_subtitle: "Seleccionados entre los 10 mejores centros de investigación en Latinoamérica",
-        timeline_2022_desc: "Fuimos reconocidos como uno de los 10 mejores centros de investigación en Latinoamérica por nuestras contribuciones al desarrollo tecnológico regional.",
-        timeline_2023_title: "Premio Nacional de Innovación",
-        timeline_2023_subtitle: "Por el desarrollo del Sistema de Monitoreo Cardíaco con IA predictiva",
-        timeline_2023_desc: "Recibimos el prestigioso Premio Nacional de Innovación por nuestro revolucionario sistema de monitoreo cardíaco que utiliza inteligencia artificial predictiva.",
+        timeline_2022_title: "Fundación de UMA",
+        timeline_2022_subtitle: "Inicio de la Unidad de Modelado y Análisis - Reconocimiento Internacional",
+        timeline_2022_desc: "Fundamos UMA como unidad especializada en investigación y desarrollo tecnológico. En el mismo año, fuimos reconocidos como uno de los 10 mejores centros de investigación en Latinoamérica por nuestras contribuciones al desarrollo tecnológico regional.",
+        timeline_2023_title: "UMA Destaca en Falling Walls Lab Bolivia 2023",
+        timeline_2023_subtitle: "Cuatro estudiantes de UNIVALLE clasifican en prestigiosa competición internacional",
+        timeline_2023_desc: "Cuatro talentosos estudiantes de la Universidad Privada del Valle destacaron en la prestigiosa competición Falling Walls Lab Bolivia, un evento de renombre internacional que resalta avances en investigación y desarrollo. Entre una multitud de propuestas de alto calibre, solo se seleccionaron 13 proyectos, y los cuatro estudiantes de UNIVALLE lograron clasificar con sus innovadoras propuestas.",
+        timeline_2024_title: "LUMIFIT - Premio Nacional de Innovación",
+        timeline_2024_subtitle: "Ganadores de la Categoría I+D+i+e con el proyecto LUMIFIT",
+        timeline_2024_desc: "Universidad Privada del Valle fue galardonada con el prestigioso premio en la categoría I+D+i+e (Investigación + Desarrollo + innovación + emprendimiento) por el innovador proyecto LUMIFIT, demostrando una vez más la excelencia en investigación y desarrollo tecnológico de nuestra institución.",
         timeline_2025_title: "DocIA - Reconocimiento Internacional",
         timeline_2025_subtitle: "Emprendedores de Alto Impacto en Incuba Unión Tecnológico y VCILAT 2025",
         timeline_2025_desc: "Nuestros estudiantes desarrollaron DocIA, una plataforma de atención médica primaria con IA que fue reconocida como emprendimiento de alto impacto, obteniendo premios económicos, becas de posgrado y visibilidad internacional.",
@@ -932,7 +980,7 @@ const I18N = {
         contact_titulo_c: "?",
         contact_desc:
             "Contáctanos para discutir cómo podemos ayudarte a transformar tu negocio con nuestras soluciones tecnológicas innovadoras.",
-        contact_direccion: "Campus Univalle, Av. Argentina #2083, Cochabamba, Bolivia",
+        contact_direccion: "Campus Univalle, Av. Calle Guillermina Martinez, Tiquipaya, Cochabamba-Bolívia",
         contact_nombre_label: "Nombre completo",
         contact_email_label: "Correo electrónico", 
         contact_empresa_type_label: "¿Tienes una empresa?",
@@ -945,10 +993,11 @@ const I18N = {
         contact_empresa_placeholder: "Nombre de tu empresa",
         contact_mensaje_placeholder: "Cuéntanos sobre tu proyecto...",
         contact_enviar: "Enviar mensaje",
+        contact_gracias: "¡Gracias por contactarnos!",
 
         // Footer
         footer_desc:
-            "Unidad de Modelado y Análisis (UMA) es un departamento de investigación de la Universidad Privada del Valle.",
+            "Unidad de produccion (UMA) - Universidad Privada del Valle.",
         footer_soluciones: "Soluciones",
         footer_iot: "IoT",
         footer_soluciones_medicas: "Soluciones Médicas",
@@ -991,7 +1040,7 @@ const I18N = {
 
         stat_investigadores: "Researchers",
         stat_proyectos: "Completed Projects",
-        stat_anios: "Years of Experience",
+        stat_publicacion: "Publications",
         stat_premios: "Awards Received",
 
         about_titulo_a: "About ",
@@ -1061,34 +1110,34 @@ const I18N = {
         projects_sub: "Discover our latest research and technological development projects",
 
         // Project Videos
-        project_video1_title: "UMA Project - Technological Development",
-        project_video1_desc: "Discover our advances in research and development of innovative technologies to transform the future.",
-        project_video2_title: "UMA Innovation - Smart Solutions",
-        project_video2_desc: "Learn about our advanced technological solutions that are revolutionizing multiple industries.",
-        project_video3_title: "UMA - Research and Development",
-        project_video3_desc: "Explore our research projects that are defining the future of technology.",
-        project_video4_title: "UMA - Advanced IoT Technology",
-        project_video4_desc: "Discover our IoT solutions that are revolutionizing environmental and industrial monitoring.",
-        project_video5_title: "UMA - Intelligent Systems",
-        project_video5_desc: "Implementation of intelligent systems for automation and advanced industrial control.",
-        project_video6_title: "UMA - Environmental Monitoring",
-        project_video6_desc: "Advanced solutions for environmental monitoring and sustainable resource management.",
-        project_video7_title: "UMA - Biomedical Innovation",
-        project_video7_desc: "Development of innovative biomedical technologies to improve quality of life.",
-        project_video8_title: "UMA - Sensor Networks",
-        project_video8_desc: "Implementation of distributed sensor networks for industrial and environmental applications.",
-        project_video9_title: "UMA - Industrial Automation",
-        project_video9_desc: "Automation solutions to optimize industrial processes with cutting-edge technology.",
-        project_video10_title: "UMA - Data Analysis",
-        project_video10_desc: "Advanced data analysis for process optimization and intelligent decision making.",
-        project_video11_title: "UMA - Renewable Energy",
-        project_video11_desc: "Research in renewable energy and sustainable energy management systems.",
-        project_video12_title: "UMA - Applied Blockchain",
-        project_video12_desc: "Implementation of blockchain technology for traceability and security in supply chains.",
-        project_video13_title: "UMA - Artificial Intelligence",
-        project_video13_desc: "Development of AI algorithms for data processing and intelligent automation.",
-        project_video14_title: "UMA - Technological Future",
-        project_video14_desc: "Vision of the technological future and innovations that are transforming the world.",
+        project_video1_title: "RheumAlly",
+        project_video1_desc: "Web rehabilitation application for upper limbs of Rheumatoid Arthritis patients using computer vision.",
+        project_video2_title: "LIFEBEAT",
+        project_video2_desc: "Portable and economical CPR equipment with automated chest compression system and patient monitoring.",
+        project_video3_title: "IoT Sensor Platform for Environmental Variables Monitoring",
+        project_video3_desc: "Comprehensive IoT sensor system for real-time monitoring of critical environmental variables.",
+        project_video4_title: "Zumi",
+        project_video4_desc: "Interactive learning robot designed to revolutionize children's education and social connectivity.",
+        project_video5_title: "FIRE SAFE",
+        project_video5_desc: "Innovative extinguisher based on low-frequency acoustic waves for highly flammable liquids.",
+        project_video6_title: "Cardiopress",
+        project_video6_desc: "Non-invasive device with photoplethysmography and AI for blood pressure and glucose measurement.",
+        project_video7_title: "RANDAL",
+        project_video7_desc: "Therapeutic robot combining robotics and AI to improve vocalization in children with dyslalia.",
+        project_video8_title: "Ultiplex",
+        project_video8_desc: "Advanced apical locator for modern dentistry with enhanced precision in root canal treatments.",
+        project_video9_title: "Roadscan",
+        project_video9_desc: "Technological system for monitoring and detecting road imperfections and maintenance management.",
+        project_video10_title: "DactiloView",
+        project_video10_desc: "Educational platform with 3D animations and sensorized gloves for Bolivian Sign Language teaching.",
+        project_video11_title: "Siku",
+        project_video11_desc: "Musical documentation project exploring differences between Western and Andean tonal systems.",
+        project_video12_title: "Bobinos Sensors",
+        project_video12_desc: "Specialized sensor system for monitoring and control of advanced industrial processes.",
+        project_video13_title: "Lumifit",
+        project_video13_desc: "Innovative training sensor system for optimizing physical routines and sports performance.",
+        project_video14_title: "TILAPIAS",
+        project_video14_desc: "Research project for sustainable development of aquaculture systems with IoT technology.",
         project_video_counter: "of",
 
         // Development Fields / Carousel
@@ -1108,12 +1157,15 @@ const I18N = {
         timeline_2021_title: "International Patent",
         timeline_2021_subtitle: "For the development of bionic prosthetics with advanced tactile sensors",
         timeline_2021_desc: "We obtained international recognition for our innovative development in bionic prosthetics that incorporate cutting-edge tactile sensors.",
-        timeline_2022_title: "International Recognition",
-        timeline_2022_subtitle: "Selected among the 10 best research centers in Latin America",
-        timeline_2022_desc: "We were recognized as one of the 10 best research centers in Latin America for our contributions to regional technological development.",
-        timeline_2023_title: "National Innovation Award",
-        timeline_2023_subtitle: "For the development of the Cardiac Monitoring System with predictive AI",
-        timeline_2023_desc: "We received the prestigious National Innovation Award for our revolutionary cardiac monitoring system that uses predictive artificial intelligence.",
+        timeline_2022_title: "UMA Foundation",
+        timeline_2022_subtitle: "Launch of the Modeling and Analysis Unit - International Recognition",
+        timeline_2022_desc: "We founded UMA as a specialized unit for research and technological development. In the same year, we were recognized as one of the 10 best research centers in Latin America for our contributions to regional technological development.",
+        timeline_2023_title: "UMA Stands Out in Falling Walls Lab Bolivia 2023",
+        timeline_2023_subtitle: "Four UNIVALLE students qualify in prestigious international competition",
+        timeline_2023_desc: "Four talented students from Universidad Privada del Valle demonstrated their excellence in research and innovation by standing out in the prestigious Falling Walls Lab Bolivia competition, an internationally renowned event that highlights advances in research and development. Among a multitude of high-caliber proposals, only 13 projects were selected for presentation, and the four UNIVALLE students successfully qualified with their innovative proposals.",
+        timeline_2024_title: "LUMIFIT - National Innovation Award",
+        timeline_2024_subtitle: "Winners of the R&D&I&E Category with the LUMIFIT project",
+        timeline_2024_desc: "Universidad Privada del Valle was awarded the prestigious prize in the R&D&I&E category (Research + Development + Innovation + Entrepreneurship) for the innovative LUMIFIT project, once again demonstrating the excellence in research and technological development of our institution.",
         timeline_2025_title: "DocIA - International Recognition",
         timeline_2025_subtitle: "High Impact Entrepreneurs at Incuba Unión Tecnológico and VCILAT 2025",
         timeline_2025_desc: "Our students developed DocIA, an AI-powered primary healthcare platform that was recognized as a high-impact venture, obtaining economic prizes, graduate scholarships, and international visibility.",
@@ -1166,7 +1218,7 @@ const I18N = {
         contact_titulo_c: "?",
         contact_desc:
             "Contact us to discuss how we can help transform your business with innovative technology solutions.",
-        contact_direccion: "Campus Univalle, Av. Argentina #2083, Cochabamba, Bolivia",
+        contact_direccion: "Campus Univalle, Av. Calle Guillermina Martinez, Tiquipaya, Cochabamba-Bolivia",
         contact_nombre_label: "Full name",
         contact_email_label: "Email",
         contact_empresa_type_label: "Do you have a business?",
@@ -1179,9 +1231,10 @@ const I18N = {
         contact_empresa_placeholder: "Your company name",
         contact_mensaje_placeholder: "Tell us about your project...",
         contact_enviar: "Send message",
+        contact_gracias: "Thank you for contacting us!",
 
         footer_desc:
-            "Modeling and Analysis Unit (UMA) is a research department of Universidad Privada del Valle.",
+            "Production Unit (UMA) - Universidad Privada del Valle.",
         footer_soluciones: "Solutions",
         footer_iot: "IoT",
         footer_soluciones_medicas: "Medical Solutions",
@@ -1224,7 +1277,7 @@ const I18N = {
 
         stat_investigadores: "Pesquisadores",
         stat_proyectos: "Projetos Concluídos",
-        stat_anios: "Anos de Experiência",
+        stat_publicacion: "Publicações",
         stat_premios: "Prêmios Recebidos",
 
         about_titulo_a: "Sobre ",
@@ -1295,34 +1348,34 @@ const I18N = {
         projects_sub: "Descubra nossos últimos projetos de pesquisa e desenvolvimento tecnológico",
 
         // Project Videos
-        project_video1_title: "Projeto UMA - Desenvolvimento Tecnológico",
-        project_video1_desc: "Descubra nossos avanços em pesquisa e desenvolvimento de tecnologias inovadoras para transformar o futuro.",
-        project_video2_title: "Inovação UMA - Soluções Inteligentes",
-        project_video2_desc: "Conheça nossas soluções tecnológicas avançadas que estão revolucionando múltiplas indústrias.",
-        project_video3_title: "UMA - Pesquisa e Desenvolvimento",
-        project_video3_desc: "Explore nossos projetos de pesquisa que estão definindo o futuro da tecnologia.",
-        project_video4_title: "UMA - Tecnologia IoT Avançada",
-        project_video4_desc: "Descubra nossas soluções IoT que estão revolucionando o monitoramento ambiental e industrial.",
-        project_video5_title: "UMA - Sistemas Inteligentes",
-        project_video5_desc: "Implementação de sistemas inteligentes para automação e controle industrial avançado.",
-        project_video6_title: "UMA - Monitoramento Ambiental",
-        project_video6_desc: "Soluções avançadas para monitoramento ambiental e gestão sustentável de recursos.",
-        project_video7_title: "UMA - Inovação Biomédica",
-        project_video7_desc: "Desenvolvimento de tecnologias biomédicas inovadoras para melhorar a qualidade de vida.",
-        project_video8_title: "UMA - Redes de Sensores",
-        project_video8_desc: "Implementação de redes de sensores distribuídos para aplicações industriais e ambientais.",
-        project_video9_title: "UMA - Automação Industrial",
-        project_video9_desc: "Soluções de automação para otimizar processos industriais com tecnologia de ponta.",
-        project_video10_title: "UMA - Análise de Dados",
-        project_video10_desc: "Análise avançada de dados para otimização de processos e tomada de decisões inteligentes.",
-        project_video11_title: "UMA - Energias Renováveis",
-        project_video11_desc: "Pesquisa em energias renováveis e sistemas de gestão energética sustentável.",
-        project_video12_title: "UMA - Blockchain Aplicado",
-        project_video12_desc: "Implementação de tecnologia blockchain para rastreabilidade e segurança em cadeias de suprimentos.",
-        project_video13_title: "UMA - Inteligência Artificial",
-        project_video13_desc: "Desenvolvimento de algoritmos de IA para processamento de dados e automação inteligente.",
-        project_video14_title: "UMA - Futuro Tecnológico",
-        project_video14_desc: "Visão do futuro tecnológico e das inovações que estão transformando o mundo.",
+        project_video1_title: "RheumAlly",
+        project_video1_desc: "Aplicação web de reabilitação para membros superiores de pacientes com Artrite Reumatoide usando visão computacional.",
+        project_video2_title: "LIFEBEAT",
+        project_video2_desc: "Equipamento de RCP portátil e econômico com sistema automatizado de compressão torácica e monitoramento de pacientes.",
+        project_video3_title: "Plataforma de Sensores IoT para Monitoramento de Variáveis Ambientais",
+        project_video3_desc: "Sistema integral de sensores IoT para monitoramento em tempo real de variáveis ambientais críticas.",
+        project_video4_title: "Zumi",
+        project_video4_desc: "Robô de aprendizagem interativo projetado para revolucionar a educação infantil e conectividade social.",
+        project_video5_title: "FIRE SAFE",
+        project_video5_desc: "Extintor inovador baseado em ondas acústicas de baixa frequência para líquidos altamente inflamáveis.",
+        project_video6_title: "Cardiopress",
+        project_video6_desc: "Dispositivo não invasivo com fotopletismografia e IA para medição de pressão arterial e glicose.",
+        project_video7_title: "RANDAL",
+        project_video7_desc: "Robô terapêutico que combina robótica e IA para melhorar a vocalização em crianças com dislalia.",
+        project_video8_title: "Ultiplex",
+        project_video8_desc: "Localizador apical avançado para odontologia moderna com maior precisão em tratamentos de canal.",
+        project_video9_title: "Roadscan",
+        project_video9_desc: "Sistema tecnológico para monitoramento e detecção de imperfeições em estradas e gestão de manutenção.",
+        project_video10_title: "DactiloView",
+        project_video10_desc: "Plataforma educativa com animações 3D e luvas sensorizadas para ensino de Língua de Sinais Boliviana.",
+        project_video11_title: "Siku",
+        project_video11_desc: "Projeto de documentação musical explorando diferenças entre sistemas tonais ocidentais e andinos.",
+        project_video12_title: "Sensores Bobinos",
+        project_video12_desc: "Sistema especializado de sensores para monitoramento e controle de processos industriais avançados.",
+        project_video13_title: "Lumifit",
+        project_video13_desc: "Sistema inovador de sensores de treinamento para otimização de rotinas físicas e performance esportiva.",
+        project_video14_title: "TILAPIAS",
+        project_video14_desc: "Projeto de pesquisa para desenvolvimento sustentável de sistemas aquícolas com tecnologia IoT.",
         project_video_counter: "de",
 
         // Development Fields / Carousel
@@ -1342,12 +1395,15 @@ const I18N = {
         timeline_2021_title: "Patente Internacional",
         timeline_2021_subtitle: "Pelo desenvolvimento de próteses biônicas com sensores táteis avançados",
         timeline_2021_desc: "Obtivemos reconhecimento internacional por nosso desenvolvimento inovador em próteses biônicas que incorporam sensores táteis de última geração.",
-        timeline_2022_title: "Reconhecimento Internacional",
-        timeline_2022_subtitle: "Selecionados entre os 10 melhores centros de pesquisa na América Latina",
-        timeline_2022_desc: "Fomos reconhecidos como um dos 10 melhores centros de pesquisa na América Latina por nossas contribuições ao desenvolvimento tecnológico regional.",
-        timeline_2023_title: "Prêmio Nacional de Inovação",
-        timeline_2023_subtitle: "Pelo desenvolvimento do Sistema de Monitoramento Cardíaco com IA preditiva",
-        timeline_2023_desc: "Recebemos o prestigioso Prêmio Nacional de Inovação por nosso revolucionário sistema de monitoramento cardíaco que utiliza inteligência artificial preditiva.",
+        timeline_2022_title: "Fundação da UMA",
+        timeline_2022_subtitle: "Lançamento da Unidade de Modelagem e Análise - Reconhecimento Internacional",
+        timeline_2022_desc: "Fundamos a UMA como uma unidade especializada em pesquisa e desenvolvimento tecnológico. No mesmo ano, fomos reconhecidos como um dos 10 melhores centros de pesquisa na América Latina por nossas contribuições ao desenvolvimento tecnológico regional.",
+        timeline_2023_title: "UMA Se Destaca no Falling Walls Lab Bolívia 2023",
+        timeline_2023_subtitle: "Quatro estudantes da UNIVALLE se classificam em prestigiosa competição internacional",
+        timeline_2023_desc: "Quatro talentosos estudantes da Universidad Privada del Valle demonstraram sua excelência em pesquisa e inovação ao se destacarem na prestigiosa competição Falling Walls Lab Bolívia, um evento de renome internacional que destaca avanços em pesquisa e desenvolvimento. Entre uma multidão de propostas de alto calibre, apenas 13 projetos foram selecionados para apresentação, e os quatro estudantes da UNIVALLE conseguiram se classificar com suas propostas inovadoras.",
+        timeline_2024_title: "LUMIFIT - Prêmio Nacional de Inovação",
+        timeline_2024_subtitle: "Vencedores da Categoria P&D&I&E com o projeto LUMIFIT",
+        timeline_2024_desc: "A Universidad Privada del Valle foi premiada com o prestigioso prêmio na categoria P&D&I&E (Pesquisa + Desenvolvimento + Inovação + Empreendedorismo) pelo projeto inovador LUMIFIT, demonstrando mais uma vez a excelência em pesquisa e desenvolvimento tecnológico de nossa instituição.",
         timeline_2025_title: "DocIA - Reconhecimento Internacional",
         timeline_2025_subtitle: "Empreendedores de Alto Impacto no Incuba Unión Tecnológico e VCILAT 2025",
         timeline_2025_desc: "Nossos estudantes desenvolveram DocIA, uma plataforma de atenção médica primária com IA que foi reconhecida como empreendimento de alto impacto, obtendo prêmios econômicos, bolsas de pós-graduação e visibilidade internacional.",
@@ -1400,7 +1456,7 @@ const I18N = {
         contact_titulo_c: "?",
         contact_desc:
             "Fale conosco para discutir como podemos transformar seu negócio com soluções tecnológicas inovadoras.",
-        contact_direccion: "Campus Univalle, Av. Argentina #2083, Cochabamba, Bolívia",
+        contact_direccion: "Campus Univalle, Av. Calle Guillermina Martinez, Tiquipaya, Cochabamba-Bolívia",
         contact_nombre_label: "Nome completo",
         contact_email_label: "E-mail",
         contact_empresa_type_label: "Você tem uma empresa?",
@@ -1413,9 +1469,10 @@ const I18N = {
         contact_empresa_placeholder: "Nome da sua empresa",
         contact_mensaje_placeholder: "Conte-nos sobre seu projeto...",
         contact_enviar: "Enviar mensagem",
+        contact_gracias: "Obrigado por entrar em contato!",
 
         footer_desc:
-            "Unidade de Modelagem e Análise (UMA) é um departamento de pesquisa da Universidad Privada del Valle.",
+            "Unidade de Produção (UMA) - Universidade Privada del Valle.",
         footer_soluciones: "Soluções",
         footer_iot: "IoT",
         footer_soluciones_medicas: "Soluções Médicas",
@@ -1710,9 +1767,20 @@ function initTimeline() {
     const timelineContent = timeline.querySelector('.events-content');
     const eventsContent = timelineContent.querySelectorAll('li');
     const fillingLine = timeline.querySelector('.filling-line');
+    const timelineSection = document.querySelector('#trayectoria');
     
     let currentTimelineItem = 0;
     const timelineItems = timeline.querySelectorAll('.events a');
+    let autoPlayInterval;
+    const autoPlayDelay = 8000; // 8 seconds
+    
+    // Check if timeline section is in viewport
+    function isTimelineVisible() {
+        if (!timelineSection) return false;
+        const rect = timelineSection.getBoundingClientRect();
+        const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+        return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+    }
     
     // Initialize timeline
     function initTimelineEvents() {
@@ -1733,6 +1801,10 @@ function initTimeline() {
     function selectTimelineItem(index) {
         if (index < 0 || index >= timelineItems.length) return;
         
+        // Prevent any scroll behavior during timeline transitions
+        const originalScrollBehavior = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = 'auto';
+        
         // Remove selected class from all items
         timelineItems.forEach(item => item.classList.remove('selected'));
         eventsContent.forEach(content => content.classList.remove('selected'));
@@ -1745,6 +1817,11 @@ function initTimeline() {
         
         // Update filling line
         updateFilling();
+        
+        // Restore original scroll behavior after a brief delay
+        setTimeout(() => {
+            document.documentElement.style.scrollBehavior = originalScrollBehavior;
+        }, 100);
     }
 
     function updateFilling() {
@@ -1770,14 +1847,19 @@ function initTimeline() {
         }
     });
 
-    // Auto-play timeline
-    let autoPlayInterval;
-    const autoPlayDelay = 8000; // 8 seconds
-
+    // Auto-play timeline - only when section is visible
     function startAutoPlay() {
+        // Clear any existing interval
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+        }
+        
         autoPlayInterval = setInterval(() => {
-            const nextIndex = (currentTimelineItem + 1) % timelineItems.length;
-            selectTimelineItem(nextIndex);
+            // Only auto-advance if timeline section is visible
+            if (isTimelineVisible()) {
+                const nextIndex = (currentTimelineItem + 1) % timelineItems.length;
+                selectTimelineItem(nextIndex);
+            }
         }, autoPlayDelay);
     }
 
@@ -1790,19 +1872,41 @@ function initTimeline() {
 
     // Pause auto-play on hover
     timeline.addEventListener('mouseenter', stopAutoPlay);
-    timeline.addEventListener('mouseleave', startAutoPlay);
+    timeline.addEventListener('mouseleave', () => {
+        if (isTimelineVisible()) {
+            startAutoPlay();
+        }
+    });
+
+    // Monitor scroll to start/stop autoplay based on visibility
+    function handleScroll() {
+        if (isTimelineVisible()) {
+            if (!autoPlayInterval) {
+                startAutoPlay();
+            }
+        } else {
+            stopAutoPlay();
+        }
+    }
 
     // Initialize everything
     initTimelineEvents();
     
-    // Start auto-play after a delay
-    setTimeout(startAutoPlay, 3000);
+    // Start auto-play only if timeline is visible
+    setTimeout(() => {
+        if (isTimelineVisible()) {
+            startAutoPlay();
+        }
+    }, 3000);
 
+    // Monitor scroll and visibility changes
+    window.addEventListener('scroll', handleScroll);
+    
     // Pause auto-play when tab is not visible
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             stopAutoPlay();
-        } else {
+        } else if (isTimelineVisible()) {
             setTimeout(startAutoPlay, 1000);
         }
     });
